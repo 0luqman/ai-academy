@@ -49,11 +49,11 @@ export default function Home() {
 
                     <div className="mt-16 grid grid-cols-2 gap-8 border-t border-white/5 pt-10">
                         <div>
-                            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground/50">Primary Architect</p>
+                            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground/50">Platform Architect</p>
                             <p className="mt-2 text-lg font-semibold border-l-2 border-primary pl-4">Mir Luqman</p>
                         </div>
                         <div>
-                            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground/50">Co-Developer</p>
+                            <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground/50">Full-Stack Architect</p>
                             <p className="mt-2 text-lg font-semibold border-l-2 border-primary pl-4">Ibraheem Rashid</p>
                         </div>
                     </div>
