@@ -1,0 +1,23 @@
+{
+  "chapterId": "chapter-5",
+  "courseId": "ml-engineering",
+  "chapterSlug": "chapter-5",
+  "chapterTitle": "Module 5",
+  "order": 5,
+  "lessonOrder": [
+    "mlengineeringhurricaneanalysis",
+    "mlengineeringdspythondictionariesproject",
+    "mlengineeringreview",
+    "mlengineeringpythonfiles",
+    "mlengineeringhackingthefender",
+    "mlengineeringcode-snippet",
+    "mlengineeringcode-review-hackingthefender",
+    "mlengineeringcodereviewreggieslinearregression",
+    "mlengineeringreggieslinearregression",
+    "mlengineeringhint-reggieslinearregression",
+    "mlengineeringreggieslinearregressioncumulativeprojectsurvey",
+    "mlengineeringdscpgroupprojectusmedicalinsurancecosts",
+    "mlengineeringresourses-usmedicalinsurancecostsportfolioproject"
+  ],
+  "estimatedMinutes": 400
+}

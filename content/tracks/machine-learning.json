@@ -1,0 +1,8 @@
+{
+  "trackId": "machine-learning",
+  "trackTitle": "Machine Learning",
+  "description": "Comprehensive path for machine learning.",
+  "courseOrder": [
+    "ml-engineering"
+  ]
+}

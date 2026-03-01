@@ -1,0 +1,27 @@
+{
+  "chapterId": "chapter-1",
+  "courseId": "ml-engineering",
+  "chapterSlug": "chapter-1",
+  "chapterTitle": "Module 1",
+  "order": 1,
+  "lessonOrder": [
+    "mlengineeringwelcometomachinelearningengineeringfoundations",
+    "mlengineeringwelcometodataliteracy",
+    "mlengineeringwrapup",
+    "mlengineeringdatacollection",
+    "mlengineeringreviewofdatatypesandquality",
+    "mlengineeringdatatypesandqualityquiz",
+    "mlengineeringreview",
+    "mlengineeringstatisticalthinkingquiz",
+    "mlengineeringstatsthinkingproject",
+    "mlengineeringconclusion",
+    "mlengineeringdatavizbasicsquiz",
+    "mlengineeringdatavizbasicsproject",
+    "mlengineeringanalyses-review",
+    "mlengineeringbiasindataanalysis",
+    "mlengineeringdataanalysesandconclusionsquiz",
+    "mlengineeringintroductiontopythonformachinelearningaiengineering",
+    "mlengineeringpythonhelloworldquiz"
+  ],
+  "estimatedMinutes": 400
+}

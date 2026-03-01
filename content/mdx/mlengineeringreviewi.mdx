@@ -1,0 +1,57 @@
+---
+lessonId: mlengineeringreviewi
+courseId: ml-engineering
+chapterId: chapter-4
+lessonSlug: mlengineeringreviewi
+lessonTitle: review-i
+order: 6
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from legacy content
+sourceFiles:
+  - ML/#49 review-i.mhtml
+practiceExercises: []
+quiz: []
+---
+Great work! I hope you are now starting to see the potential of [strings](https://ai-academy.riwot.com)Preview: Docs Loading link description
+
+Copeland’s Corporate Company has finalized what they want their username and temporary password creation to be and have enlisted your help, once again, to build the function to generate them. In this exercise, you will create two functions, username_generator and password_generator.
+
+
+Let’s start with username_generator. Create a function called username_generator take two inputs, first_name and last_name and returns a user_name. The username should be a slice of the first three letters of their first name and the first four letters of their last name. If their first name is less than three letters or their last name is less than four letters it should use their entire names.
+
+
+For example, if the employee’s name is Abe Simpson the function should generate the username AbeSimp.
+
+You can use slicing to get the first few letters of a string. If the length of the string is less than the desired slice, you can just return the whole string. Use the len() function to check the length of the strings.
+
+Great work! Now for the temporary password, they want the function to take the input user name and shift all of the letters by one to the right, so the last letter of the username ends up as the first letter and so forth. For example, if the username is AbeSimp, then the temporary password generated should be pAbeSim.
+
+
+Start by defining a function called password_generator that takes one parameter user_name and defines an empty string named password within the function body.
+
+Define your function password_generator with user_name as a parameter. Inside the function, create an empty string password. 
+
+
+For example:
+
+
+def function_name(parameter_value):  empty_string = ""
+
+Inside password_generator, create a for loop that iterates through the indices of user_name by going from 0 to len(user_name). 
+
+
+The loop should create the password by shifting all the letters of user_name one to the right. To do so, add the letter at the previous index of user_name to password with each pass of the loop.
+
+
+After the for loop but still within the definition of password_generator, return the password.
+
+Remember, you can use range(x,y) to generate a list of values between x and y (including x and excluding y). This is how you should iterate through the username.
+
+
+For example, after the for loop is complete, print(password_generator("apple")) should print eappl.
+
+
+<Playground initialCode="# Try your Python code here!\n\nprint('Hello from mlengineeringreviewi')" />

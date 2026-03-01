@@ -1,0 +1,9 @@
+{
+  "trackId": "data-science",
+  "trackTitle": "Data Science",
+  "description": "Comprehensive path for data science.",
+  "courseOrder": [
+    "ds-basics",
+    "ds-advanced"
+  ]
+}

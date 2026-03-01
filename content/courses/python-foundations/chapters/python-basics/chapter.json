@@ -1,0 +1,11 @@
+{
+    "chapterId": "python-basics",
+    "courseId": "python-foundations",
+    "chapterSlug": "python-basics",
+    "chapterTitle": "Python Basics for ML",
+    "order": 1,
+    "lessonOrder": [
+        "variables-and-data-types"
+    ],
+    "estimatedMinutes": 60
+}

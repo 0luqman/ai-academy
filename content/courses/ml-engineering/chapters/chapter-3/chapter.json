@@ -1,0 +1,28 @@
+{
+  "chapterId": "chapter-3",
+  "courseId": "ml-engineering",
+  "chapterSlug": "chapter-3",
+  "chapterTitle": "Module 3",
+  "order": 3,
+  "lessonOrder": [
+    "mlengineeringusepythonlistquiz",
+    "mlengineeringdspythonlists2project",
+    "mlengineeringhow-to-install-git-bash-for-windows_-complete-setup-guide-_-ai-academy",
+    "mlengineeringcode-text",
+    "mlengineeringreview",
+    "mlengineeringpythonloops",
+    "mlengineeringlistcomprehension",
+    "mlengineeringdspythonloopsproject",
+    "mlengineeringcode",
+    "mlengineeringcode-review-dspythonloopsproject",
+    "mlengineeringwhygooffplatformwhenai-academymakeslearningsoeasy",
+    "mlengineeringcommandlinesetup",
+    "mlengineeringintroducingjupyternotebook",
+    "mlengineeringsettingupjupyternotebook",
+    "mlengineeringgettingstartedwithjupyter",
+    "mlengineeringgettingmoreoutofjupyternotebook",
+    "mlengineeringdscpcodereviewfridakahloretrospective",
+    "mlengineeringfridakahloretrospectiveproject"
+  ],
+  "estimatedMinutes": 400
+}

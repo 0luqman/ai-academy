@@ -1,0 +1,32 @@
+---
+lessonId: dsbasicscode-snippet
+courseId: ds-basics
+chapterId: chapter-1
+lessonSlug: dsbasicscode-snippet
+lessonTitle: Code SNIPPET
+order: 6
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from legacy content
+sourceFiles:
+  - DS/#4.1 Code SNIPPET.txt
+practiceExercises: []
+quiz: []
+---
+
+SELECT COUNT(DISTINCT user_id) AS 'enrollments',
+  COUNT(CASE
+       	WHEN strftime("%m", cancel_date) = '03'
+        THEN user_id
+  END) AS 'march_cancellations',
+ 	ROUND(100.0 * COUNT(CASE
+       	WHEN strftime("%m", cancel_date) = '03'
+        THEN user_id
+  END) / COUNT(DISTINCT user_id)) AS 'churn_rate'
+FROM pro_users
+WHERE signup_date  '2017-03-01')
+  );
+
+<Playground />

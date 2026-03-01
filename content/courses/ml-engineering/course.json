@@ -1,0 +1,17 @@
+{
+  "courseId": "ml-engineering",
+  "courseSlug": "ml-engineering",
+  "courseTitle": "Machine Learning Engineering",
+  "track": "machine-learning",
+  "description": "Migrated content from ML. Total lessons: 110",
+  "difficulty": "intermediate",
+  "estimatedHours": 37,
+  "chapterOrder": [
+    "chapter-1",
+    "chapter-2",
+    "chapter-3",
+    "chapter-4",
+    "chapter-5",
+    "chapter-6"
+  ]
+}

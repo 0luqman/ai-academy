@@ -1,0 +1,25 @@
+{
+  "chapterId": "chapter-2",
+  "courseId": "ml-engineering",
+  "chapterSlug": "chapter-2",
+  "chapterTitle": "Module 2",
+  "order": 2,
+  "lessonOrder": [
+    "mlengineeringdspythonsyntaxproject",
+    "mlengineeringdsfanoteonpythonfunctions",
+    "mlengineeringfunctionsreview",
+    "mlengineeringfunctionsquiz",
+    "mlengineeringdspythonfunctionsproject",
+    "mlengineeringpython-code",
+    "mlengineeringreview",
+    "mlengineeringlearnpython_2controlflow_spacepy-at-main-ai-academy_learnpython",
+    "mlengineeringpythoncontrolflowquiz",
+    "mlengineeringdspythoncontrolflowproject",
+    "mlengineeringzipforlists",
+    "mlengineeringdspythonlists1project",
+    "mlengineeringcode",
+    "mlengineeringreviewii",
+    "mlengineeringlast-hint-reviewii"
+  ],
+  "estimatedMinutes": 400
+}
