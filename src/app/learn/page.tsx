@@ -1,8 +1,8 @@
-import { getAllTracks } from "@/lib/content";
+import { getAllTracks, Track } from "@/lib/content";
 import Link from "next/link";
 
 export default function LearnPage() {
-    let tracks = [];
+    let tracks: Track[] = [];
     try {
         tracks = getAllTracks();
     } catch (e) {
@@ -10,9 +10,9 @@ export default function LearnPage() {
     }
 
     // Default tracks if library fails or returns nothing
-    const displayTracks = tracks.length > 0 ? tracks : [
-        { trackId: 'machine-learning', trackTitle: 'Machine Learning', description: 'Comprehensive path for machine learning and AI architecture.' },
-        { trackId: 'data-science', trackTitle: 'Data Science', description: 'Master the data lifecycle, from SQL to advanced analysis.' }
+    const displayTracks: Track[] = tracks.length > 0 ? tracks : [
+        { trackId: 'machine-learning', trackTitle: 'Machine Learning', description: 'Comprehensive path for machine learning and AI architecture.', courseOrder: [] },
+        { trackId: 'data-science', trackTitle: 'Data Science', description: 'Master the data lifecycle, from SQL to advanced analysis.', courseOrder: [] }
     ];
 
     return (
@@ -25,7 +25,7 @@ export default function LearnPage() {
             </p>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {displayTracks.map((track: any) => (
+                {displayTracks.map((track) => (
                     <Link key={track.trackId} href={`/learn/${track.trackId}`} className="group relative rounded-xl border p-6 hover:border-primary transition-colors block bg-card transition-all hover:scale-[1.02]">
                         <h3 className="font-semibold leading-none tracking-tight mb-3 text-xl font-bold">{track.trackTitle}</h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">{track.description}</p>
