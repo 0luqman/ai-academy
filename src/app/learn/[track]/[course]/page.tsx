@@ -33,7 +33,7 @@ export default function CoursePage({ params }: { params: { track: string, course
 
             <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-12">
                 <div className="space-y-12">
-                    {chapters.map((chapter) => {
+                    {chapters.map((chapter: any) => {
                         const lessons = getLessonsInChapter(course.courseSlug, chapter.chapterSlug);
 
                         return (
@@ -44,7 +44,7 @@ export default function CoursePage({ params }: { params: { track: string, course
                                 </h3>
 
                                 <div className="grid gap-3 mt-6">
-                                    {lessons.map((lesson, index) => (
+                                    {lessons.map((lesson: any, index: number) => (
                                         <Link
                                             key={`${lesson.lessonId}-${index}`}
                                             href={`/learn/${params.track}/${course.courseSlug}/${chapter.chapterSlug}/${lesson.lessonSlug}`}

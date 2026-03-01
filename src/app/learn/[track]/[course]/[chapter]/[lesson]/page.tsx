@@ -29,7 +29,7 @@ export default function LessonPage({
                         {chapter.chapterTitle}
                     </h4>
                     <nav className="flex flex-col space-y-1">
-                        {lessons.map((l, index) => (
+                        {lessons.map((l: any, index: number) => (
                             <Link
                                 key={`${l.lessonId}-${index}`}
                                 href={`/learn/${params.track}/${params.course}/${params.chapter}/${l.lessonSlug}`}
@@ -49,7 +49,7 @@ export default function LessonPage({
                     <div className="flex flex-col space-y-1">
                         {getChaptersInCourse(params.course)
                             .filter(c => c.chapterSlug !== params.chapter)
-                            .map(c => (
+                            .map((c: any) => (
                                 <Link
                                     key={c.chapterId}
                                     href={`/learn/${params.track}/${params.course}/${c.chapterSlug}`}

@@ -22,7 +22,7 @@ export default function TrackPage({ params }: { params: { track: string } }) {
             </p>
 
             <div className="grid gap-4">
-                {courses.map((course) => (
+                {courses.map((course: any) => (
                     <div key={course.courseId} className="flex flex-col justify-between rounded-xl border p-5 sm:flex-row sm:items-center bg-card hover:border-primary transition-all shadow-sm">
                         <div className="flex-1 pr-6">
                             <div className="flex items-center gap-3 mb-2">
