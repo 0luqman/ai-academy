@@ -3,103 +3,70 @@ lessonId: datatypesandqualityquiz
 courseId: ml-engineering
 chapterId: chapter-1
 lessonSlug: datatypesandqualityquiz
-lessonTitle: data-types-and-quality-quiz
+lessonTitle: Data Types And Quality Quiz
 order: 6
 difficulty: intermediate
 estimatedMinutes: 20
 prerequisites: []
 learningObjectives:
-  - Material from legacy content
+  - Test your knowledge on data quality issues
+  - Identify categorical vs numerical variables
+  - Understand different types of categorical data
 sourceFiles:
   - ML/#6 data-types-and-quality-quiz.mhtml
 practiceExercises: []
 quiz: []
 ---
-Which of these issues would compromise the accuracy of a dataset?
 
-Which one of these is NOT a categorical variable?
+Test your knowledge on data quality, types, and sampling.
 
-What are the two types of categorical variables?
+<Quiz questions={[
+  {
+    question: "Which of these issues would compromise the accuracy of a dataset?",
+    options: [
+      "Some researchers measured distances in meters and others measured in yards and recorded the values without units.",
+      "Some measurements are made mechanically and some are made digitally.",
+      "A researcher measures the weight of inanimate objects in the morning vs evening.",
+      "Using iPads vs pencil and paper for initial recording."
+    ],
+    correctAnswer: 0,
+    explanation: "Mixing units (meters vs yards) without recording which is which makes the numerical values incomparable and inaccurate."
+  },
+  {
+    question: "Which one of these is NOT a categorical variable?",
+    options: [
+      "Blood pressure measured daily: 110/90, 120/92, 115/86",
+      "Survey responses: Strongly Disagree, Disagree, Agree",
+      "Country of birth: Italy, Mexico, United States",
+      "Student grades: A, B, C, D, E"
+    ],
+    correctAnswer: 0,
+    explanation: "Blood pressure readings are numerical (quantitative) measurements, whereas the others are categories or rankings."
+  },
+  {
+    question: "What are the two types of categorical variables?",
+    options: [
+      "Nominal and Ordinal",
+      "Discrete and Continuous",
+      "Qualitative and Quantitative",
+      "Primary and Secondary"
+    ],
+    correctAnswer: 0,
+    explanation: "Categorical data is split into Nominal (no inherent order, e.g., colors) and Ordinal (has a logical order, e.g., sizes or grades)."
+  },
+  {
+    question: "True or False: You should always fill in missing numeric variables with the mean of the column.",
+    options: ["True", "False"],
+    correctAnswer: 1,
+    explanation: "Always using the mean can bias your data and reduce variance. The 'correct' way to handle missing data depends on the context and the reason data is missing."
+  },
+  {
+    question: "True or False: Because it is a subset of the population, a random sample will always perfectly represent the population.",
+    options: ["True", "False"],
+    correctAnswer: 1,
+    explanation: "A random sample is subject to sampling error and may not perfectly reflect the population, though it aims to be unbiased."
+  }
+]} />
 
-True or False? 
-You should always fill in missing numeric variables with the mean of the column.
-
-True or False: Because it is a subset of the population, a random sample will always perfectly represent the population.
-
-What types of problems can messy data create? Use the situations provided to help identify the issues.
-
-What questions should you ask yourself to ensure data validity?
-
-Given the description of the dataset, determine the type of each categorical variable.
-
-Which of these issues would compromise the accuracy of a dataset?
-
-Some researchers measured distances in meters and others measured in yards and recorded the values without units.
-
-Some measurements are made mechanically and some are made digitally.
-
-A researcher measures the weight of some inanimate objects in the morning and other inanimate objects in the evening.
-
-Some researchers use iPads to record the data and others use pencil and paper before inputting the values into the system.
-
-Which one of these is NOT a categorical variable?
-
-Blood pressure measured daily: 110/90, 120/92, 115/86, 120/90
-
-Survey responses: Strongly Disagree, Disagree, Somewhat Disagree, Somewhat Agree, Agree, Strongly Agree
-
-Country of birth: Italy, Mexico, United States, Thailand, Spain
-
-Student grades: A, B, C, D, E
-
-What are the two types of categorical variables?
-
-True or False? 
-You should always fill in missing numeric variables with the mean of the column.
-
-False
-
-True
-
-True or False: Because it is a subset of the population, a random sample will always perfectly represent the population.
-
-False
-
-True
-
-What types of problems can messy data create? Use the situations provided to help identify the issues.
-
-What questions should you ask yourself to ensure data validity?
-
-Given the description of the dataset, determine the type of each categorical variable.
-
-
-
-
-
-Variable
-Description
-
-
-
-ID
-Student ID
-
-
-Name
-Name of the person
-
-
-Age
-Numerical value for each student’s age
-
-
-Letter_Grade
-Categorical value for the student’s grade (A, B, C, D or F)
-
-
-Class_Subject
-Subject of class (Math, Chemistry, History, etc.)
-
-
-<Playground initialCode="# Try your Python code here!\n\nprint('Hello from mlengineeringdatatypesandqualityquiz')" />
+### Practice Playground
+<Playground initialCode="# Use this space to explore your thoughts!\nprint('Ready to learn more!')" />

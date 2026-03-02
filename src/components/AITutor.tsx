@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, Code2, X, Brain, Trash2, User, Bot, Loader2 } from 'lucide-react';
+import { Send, Sparkles, Code2, X, Trash2, User, Bot, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
@@ -19,6 +19,24 @@ export default function AITutor() {
     const scrollRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
 
+    // Persistence
+    useEffect(() => {
+        const saved = localStorage.getItem('ai-tutor-mini');
+        if (saved) {
+            try {
+                setMessages(JSON.parse(saved));
+            } catch (e) {
+                console.error("Failed to load mini chat history", e);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (messages.length > 0) {
+            localStorage.setItem('ai-tutor-mini', JSON.stringify(messages));
+        }
+    }, [messages]);
+
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTo({
@@ -27,6 +45,11 @@ export default function AITutor() {
             });
         }
     }, [messages, isLoading]);
+
+    const clearHistory = () => {
+        setMessages([]);
+        localStorage.removeItem('ai-tutor-mini');
+    };
 
     const handleSend = async () => {
         if (!input.trim() || isLoading) return;
@@ -78,13 +101,20 @@ export default function AITutor() {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                    "fixed bottom-8 right-8 w-16 h-16 rounded-2xl shadow-2xl flex items-center justify-center transition-all z-50 group overflow-hidden",
-                    isOpen ? "bg-background border border-border" : "bg-primary text-primary-foreground hover:scale-110 active:scale-95 shadow-primary/30"
+                    "fixed bottom-8 right-8 transition-all z-50 group overflow-hidden",
+                    isOpen
+                        ? "w-12 h-12 rounded-full bg-background border border-border flex items-center justify-center shadow-xl"
+                        : "px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white flex items-center gap-2 hover:bg-white/20 active:scale-95 shadow-2xl"
                 )}
             >
-                {!isOpen && <Sparkles className="relative z-10 animate-pulse" size={28} fill="currentColor" />}
-                {isOpen && <X className="text-foreground" size={24} />}
-                {!isOpen && <div className="absolute inset-0 bg-gradient-to-tr from-primary via-primary to-purple-400 group-hover:rotate-12 transition-transform scale-150" />}
+                {isOpen ? (
+                    <X className="text-foreground" size={20} />
+                ) : (
+                    <>
+                        <Sparkles size={16} className="text-primary animate-pulse" />
+                        <span className="text-sm font-black uppercase tracking-widest">Ask AI</span>
+                    </>
+                )}
             </button>
 
             {/* Chat Window */}
@@ -95,9 +125,6 @@ export default function AITutor() {
                 {/* Header */}
                 <div className="p-6 border-b border-white/5 bg-muted/30 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                            <Brain className="text-white" size={20} />
-                        </div>
                         <div>
                             <h3 className="text-sm font-black uppercase tracking-tighter">AI Tutor</h3>
                             <div className="flex items-center gap-1.5">
@@ -107,7 +134,7 @@ export default function AITutor() {
                         </div>
                     </div>
                     <button
-                        onClick={() => setMessages([])}
+                        onClick={clearHistory}
                         className="p-2 hover:bg-red-500/10 rounded-xl text-muted-foreground hover:text-red-500 transition-colors"
                         title="Clear History"
                     >
