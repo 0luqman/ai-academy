@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import curriculumIndex from '../../../content/content-index.json';
 
 export interface AIResponse {
     content: string;
@@ -13,7 +14,8 @@ export interface AIRequestConfig {
     history?: { role: 'user' | 'model'; parts: { text: string }[] }[];
 }
 
-const DEFAULT_MODEL = 'gemini-1.5-flash';
+const DEFAULT_MODEL = 'gemma-3-27b-it';
+const FALLBACK_MODEL = 'gemma-3-12b-it';
 
 export class AIService {
     private genAI: GoogleGenerativeAI | null = null;
@@ -36,11 +38,40 @@ export class AIService {
         }
 
         try {
-            const targetModel = config.model || DEFAULT_MODEL;
-            const model = this.genAI.getGenerativeModel({ 
-                model: targetModel,
-                systemInstruction: config.systemPrompt || "You are an AI Academy by RiWoT tutor. Help the student understand the lesson material. Be concise and encouraging. The student is currently studying: " + context
-            });
+            let targetModel = config.model || DEFAULT_MODEL;
+            let model;
+
+            const systemInstruction = config.systemPrompt || `
+                You are the AI Academy by RiWoT tutor, an expert in AI, Machine Learning, and Data Science.
+                Your goal is to guide students through the curriculum and help them understand complex concepts.
+
+                CURRICULUM CONTEXT:
+                You have access to the following curriculum structure:
+                ${JSON.stringify(curriculumIndex, null, 2)}
+
+                CURRENT CONTEXT:
+                The student is currently: ${context}
+
+                INSTRUCTIONS:
+                - Be concise, encouraging, and professional.
+                - Use the curriculum context to suggest relevant lessons if the student is lost or asks about topics.
+                - If the student asks about a topic covered in the curriculum, refer to the specific lesson title.
+                - Focus on helping them solve problems themselves rather than just giving answers.
+            `;
+
+            try {
+                model = this.genAI.getGenerativeModel({
+                    model: targetModel,
+                    systemInstruction: systemInstruction
+                });
+            } catch (err) {
+                console.warn(`Primary model ${targetModel} failed, trying fallback...`);
+                targetModel = FALLBACK_MODEL;
+                model = this.genAI.getGenerativeModel({
+                    model: targetModel,
+                    systemInstruction: systemInstruction
+                });
+            }
 
             const chat = model.startChat({
                 history: config.history || [],

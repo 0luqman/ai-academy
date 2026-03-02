@@ -48,6 +48,7 @@ export default function CoursePage({ params }: { params: { track: string, course
                                         <Link
                                             key={`${lesson.lessonId}-${index}`}
                                             href={`/learn/${params.track}/${course.courseSlug}/${chapter.chapterSlug}/${lesson.lessonSlug}`}
+                                            prefetch={false}
                                             className="group border rounded-xl p-4 hover:border-primary/50 transition-all bg-card/40 backdrop-blur-sm glass-card flex justify-between items-center"
                                         >
                                             <div className="flex items-center gap-4">

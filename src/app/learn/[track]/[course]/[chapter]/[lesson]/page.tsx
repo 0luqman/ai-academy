@@ -48,6 +48,7 @@ export default function LessonPage({
                                 <Link
                                     key={`${l.lessonId}-${index}`}
                                     href={`/learn/${params.track}/${params.course}/${params.chapter}/${l.lessonSlug}`}
+                                    prefetch={false}
                                     className={`relative text-sm rounded-xl px-4 py-3 transition-all duration-300 group ${isActive
                                         ? "font-bold text-primary bg-primary/10 shadow-sm"
                                         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"

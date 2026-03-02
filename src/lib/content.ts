@@ -93,19 +93,43 @@ export function getChaptersInCourse(courseSlug: string): Chapter[] {
     return course.chapterOrder.map(chapterSlug => getChapter(courseSlug, chapterSlug)).filter(Boolean) as Chapter[];
 }
 
+const lessonFrontmatterCache = new Map<string, LessonFrontmatter>();
+
+export function getLessonFrontmatter(lessonSlug: string): LessonFrontmatter | null {
+    if (lessonFrontmatterCache.has(lessonSlug)) {
+        return lessonFrontmatterCache.get(lessonSlug)!;
+    }
+
+    const file = path.join(contentDir, 'mdx', `${lessonSlug}.mdx`);
+    if (!fs.existsSync(file)) return null;
+
+    // Read only the beginning of the file to get frontmatter if possible,
+    // but gray-matter is efficient enough if we only take 'data'
+    const raw = fs.readFileSync(file, 'utf-8');
+    const { data } = matter(raw);
+    const frontmatter = data as LessonFrontmatter;
+
+    lessonFrontmatterCache.set(lessonSlug, frontmatter);
+    return frontmatter;
+}
+
 export function getLesson(courseSlug: string, chapterSlug: string, lessonSlug: string): Lesson | null {
     const file = path.join(contentDir, 'mdx', `${lessonSlug}.mdx`);
     if (!fs.existsSync(file)) return null;
     const raw = fs.readFileSync(file, 'utf-8');
     const { data, content } = matter(raw);
-    return { frontmatter: data as LessonFrontmatter, content };
+
+    const frontmatter = data as LessonFrontmatter;
+    // Update cache while we're at it
+    lessonFrontmatterCache.set(lessonSlug, frontmatter);
+
+    return { frontmatter, content };
 }
 
 export function getLessonsInChapter(courseSlug: string, chapterSlug: string): LessonFrontmatter[] {
     const chapter = getChapter(courseSlug, chapterSlug);
     if (!chapter) return [];
     return chapter.lessonOrder.map(lessonSlug => {
-        const lesson = getLesson(courseSlug, chapterSlug, lessonSlug);
-        return lesson ? lesson.frontmatter : null;
+        return getLessonFrontmatter(lessonSlug);
     }).filter(Boolean) as LessonFrontmatter[];
 }
