@@ -12,7 +12,8 @@ export interface AIRequestConfig {
     systemPrompt?: string;
 }
 
-const DEFAULT_MODEL = 'gemini-1.5-flash';
+// Using Gemma 27b as requested (defaulting to the IT version for chat)
+const DEFAULT_MODEL = 'gemma-2-27b-it';
 
 export class AIService {
     private genAI: GoogleGenerativeAI | null = null;
@@ -31,7 +32,12 @@ export class AIService {
         config: AIRequestConfig = {}
     ): Promise<AIResponse> {
         if (!this.genAI) {
-            throw new Error("AI Service: GEMINI_API_KEY is not configured.");
+            // Log for developer but return graceful error to student
+            console.error("AI Service: GEMINI_API_KEY is not configured.");
+            return {
+                content: "I'm sorry, I'm currently disconnected from my knowledge base. Please ask your teacher to check the API configuration.",
+                usageContext: { model: 'offline' }
+            };
         }
 
         try {
@@ -41,15 +47,19 @@ export class AIService {
                 systemInstruction: config.systemPrompt || "You are an AI Academy by RiWoT tutor. Help the student understand the lesson material. Be concise and encouraging. Always refer to yourself as the RiWoT AI Tutor."
             });
 
-            const chatHistory: Content[] = history.map(h => ({
-                role: h.role,
-                parts: [{ text: h.text }]
-            }));
+            // Map history but filter out empty or invalid entries
+            const chatHistory: Content[] = history
+                .filter(h => h.text && h.text.trim().length > 0)
+                .map(h => ({
+                    role: h.role,
+                    parts: [{ text: h.text }]
+                }));
 
             const chat = model.startChat({
                 history: chatHistory,
                 generationConfig: {
-                    maxOutputTokens: 1000,
+                    maxOutputTokens: 2048,
+                    temperature: 0.7,
                 },
             });
 
@@ -66,8 +76,14 @@ export class AIService {
             };
         } catch (error: any) {
             console.error("AI Service Error:", error);
+            // Fallback to a smaller model if the 27b one fails or is unavailable
+            if (config.model !== 'gemma-2-9b-it' && !config.model) {
+                console.log("Attempting fallback to Gemma 9b...");
+                return this.generateResponse(prompt, context, history, { ...config, model: 'gemma-2-9b-it' });
+            }
+
             return {
-                content: "I'm sorry, I'm having trouble connecting to my brain right now. Please try again later.",
+                content: "I'm having a bit of a 'brain fog' moment. Could you try rephrasing your question or checking back in a minute?",
                 usageContext: {
                     model: DEFAULT_MODEL,
                 }

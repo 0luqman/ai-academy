@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import AITutor from '@/components/AITutor';
+import { Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'AI Academy by RiWoT | Built by RiWoT',
@@ -33,6 +34,10 @@ export default function RootLayout({
                                 </Link>
                                 <Link href="/about" className="transition-colors hover:text-foreground/80 text-foreground/60">
                                     About
+                                </Link>
+                                <Link href="/chat" className="flex items-center gap-1.5 transition-colors hover:text-foreground text-primary font-bold">
+                                    <Sparkles size={14} />
+                                    AI Tutor
                                 </Link>
                             </nav>
                         </div>
