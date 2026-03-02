@@ -1,17 +1,17 @@
 {
-  "chapterId": "chapter-6",
-  "courseId": "ml-engineering",
-  "chapterSlug": "chapter-6",
-  "chapterTitle": "Module 6",
-  "order": 6,
-  "lessonOrder": [
-    "mlengineeringsetup-usmedicalinsurancecostsportfolioproject",
-    "mlengineeringoverview-usmedicalinsurancecostsportfolioproject",
-    "mlengineeringusmedicalinsurancecostsportfolioproject",
-    "mlengineeringwelcometopandasformlaiengineeringfoundations",
-    "mlengineeringlambdafunctions",
-    "mlengineeringcontainsa",
-    "mlengineeringterminal-containsa"
-  ],
-  "estimatedMinutes": 200
+    "chapterId": "chapter-6",
+    "courseId": "ml-engineering",
+    "chapterSlug": "chapter-6",
+    "chapterTitle": "Module 6",
+    "order": 6,
+    "lessonOrder": [
+        "setup-usmedicalinsurancecostsportfolioproject",
+        "overview-usmedicalinsurancecostsportfolioproject",
+        "usmedicalinsurancecostsportfolioproject",
+        "welcometopandasformlaiengineeringfoundations",
+        "lambdafunctions",
+        "containsa",
+        "terminal-containsa"
+    ],
+    "estimatedMinutes": 200
 }

@@ -1,0 +1,172 @@
+---
+lessonId: dspythonlists1project
+courseId: ml-engineering
+chapterId: chapter-2
+lessonSlug: dspythonlists1project
+lessonTitle: ds-python-lists1-project
+order: 18
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from legacy content
+sourceFiles:
+  - ML/#30 ds-python-lists1-project.mhtml
+practiceExercises: []
+quiz: []
+---
+In this project, you will examine how factors such as age, sex, BMI, number of children, and smoking status contribute to medical insurance costs.
+
+
+Note: while insurance companies do use BMI in their calculations, and that is reflected in this project, BMI is not necessarily an accurate predictor of health. As data scientists, we should always be skeptical of quantitative measures like BMI that reduce complex phenomena to a single number.
+
+
+You will apply your new knowledge of Python Lists to store insurance cost data in a list as well as compare estimated insurance costs to actual insurance costs. 
+
+
+Let’s get started!
+
+
+Setup Instructions
+You have two options of completing this assignment. Either here, within our output terminal, or on your own, in case you’re more comfortable using a Jupyter notebook.If you choose to do this project on your computer instead of AI Academy by RiWoT, you can download what you’ll need by clicking the “Download” button below. If you need help setting up your computer, be sure to check out our setup guides:
+
+
+
+- [Command Line Interface Setup](/learn)
+
+- [Introducing Jupyter Notebook](/learn)
+
+- [Setting up Jupyter Notebook](/learn)
+
+- [Getting Started with Jupyter](/learn)
+
+- [Getting More out of Jupyter Notebook](/learn)
+
+
+Open Python Lists Medical Insurance Estimation.ipynb and follow the steps in the Jupyter Notebook. If you get stuck, you can look at Python Lists Medical Insurance Estimation_Solution.ipynb for the answer.
+
+First, take a look at the code in script.py.
+
+
+The function estimate_insurance_cost() estimates the medical insurance cost for an individual, based on five variables:
+
+
+
+- age: age of the individual in years
+
+- sex: 0 for female, 1 for male
+
+- bmi: individual’s body mass index
+
+- num_of_children: number of children the individual has
+
+- smoker: 0 for a non-smoker, 1 for a smoker
+
+
+These variables are used in the following formula to estimate an individual’s insurance cost (in USD):
+
+
+insurance_cost=250∗age−128∗sex+370∗bmi+425∗num_of_children+24000∗smoker−12500\begin{aligned}
+insurance\_cost = 250*age - 128*sex \\
++ 370*bmi + 425*num\_of\_children \\
++ 24000*smoker - 12500
+\end{aligned}
+insurance_cost=250∗age−128∗sex+370∗bmi+425∗num_of_children+24000∗smoker−12500​
+
+We want to compare the estimated insurance costs (as calculated by our function) to the actual amounts that Maria, Rohan, and Valentina paid.
+
+
+Create a list called names and fill it with the names of the individuals you are estimating insurance costs for:
+
+
+
+- "Maria"
+
+- "Rohan"
+
+- "Valentina"
+
+Next, create a list called insurance_costs and fill it with the actual amounts that Maria, Rohan, and Valentina paid for insurance:
+
+
+
+- 4150.0
+
+- 5320.0
+
+- 35210.0
+
+Currently the names and insurance_costs lists are separate, but we want each name to be paired with an insurance cost. 
+
+
+Create a new variable called insurance_data that combines names and insurance_costs using the zip() function.
+
+
+Print this new variable.
+
+The output should look something like:
+
+
+<zip object at 0x7f1631e86b48>
+
+Next, create an empty list called estimated_insurance_data. 
+
+
+This is the list we’ll use to store the estimated insurance costs for our three individuals.
+
+We want to add our estimated insurance data for Maria, Rohan, and Valentina to the estimated_insurance_data list. 
+
+
+Use .append() to add ("Maria", maria_insurance_cost) to estimated_insurance_data. Do the same for Rohan and Valentina.
+
+Print estimated_insurance_data. 
+
+
+Make sure the output is what you expected.
+
+In the output, you should see two lists. The first one represents the actual insurance cost data and the second one represents the estimated insurance cost data. 
+
+
+However, it’s difficult to know this just by looking at the output. As a data scientist, you want to make sure that your data is clean and easy to understand.
+
+
+Add to the print statement for insurance_data so that it’s clear what the list contains. The output of the print statement should look like:
+
+
+Here is the actual insurance cost data: [...list output...]
+
+Do the same for the print statement that prints estimated_insurance_data. The output should look like:
+
+
+Here is the estimated insurance cost data: [...list output...]
+
+Click “Save” to see the results. 
+
+
+It should be much more clear from the output what each of the two lists represents, helping you better understand the data you’re working with.
+
+
+You may notice that there are differences between the actual insurance costs and estimated insurance costs. This means that our estimate_insurance_cost() function does not calculate insurance costs with 100% accuracy.
+
+
+Compare the estimated insurance data to the actual insurance data. Do the estimated insurance costs seem to be overestimated or underestimated?
+
+Congratulations! In this project, you used Python lists to store estimated insurance cost data and then compare that data to actual insurance cost data.
+
+
+As you’ve seen, lists are data structures in Python that can contain multiple pieces of data in a single object. As a data scientist, you’ll find yourself working with this data structure quite often. You now have a solid foundation to move forward in your data science journey! 
+
+
+If you’d like additional practice on lists, here are some ways you might extend this project:
+
+
+
+- Calculate the difference between the actual insurance cost data and the estimated insurance cost data for each individual, and store the results in a list called insurance_cost_difference.
+
+- Estimate the insurance cost for a new individual, Akira, who is a 19 year-old male non-smoker with no children and a BMI of 27.1. Make sure to append his name to names and his actual insurance cost, 2930.0, to insurance_costs.
+
+
+Happy coding!
+
+
+<Playground initialCode="# Try your Python code here!\n\nprint('Hello from mlengineeringdspythonlists1project')" />

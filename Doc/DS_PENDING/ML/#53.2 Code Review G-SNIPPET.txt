@@ -1,0 +1,53 @@
+PURPOSE
+```
+# Placeholder: start by implementing caesar_encode, caesar_decode, and optional helpers
+
+def caesar_encode(message, offset):
+    """Encode a message using a Caesar cipher with given offset."""
+    result = []
+    for ch in message:
+        if ch.isalpha():
+            base = ord('a') if ch.islower() else ord('A')
+            shifted = (ord(ch) - base + offset) % 26 + base
+            result.append(chr(shifted))
+        else:
+            result.append(ch)
+    return ''.join(result)
+
+def caesar_decode(message, offset):
+    """Decode a message encoded with a Caesar cipher using given offset."""
+    return caesar_encode(message, -offset)
+```
+
+
+
+
+READABILITY
+```
+def caesar_encode(message, offset):
+    return ''.join([
+        chr((ord(c) - base + offset) % 26 + base) if c.isalpha() else c
+        for c in message
+        for base in ([ord('a')] if c.islower() else [ord('A')])
+    ])
+```
+
+
+
+
+PERFORMENCE
+```
+def caesar_encode(message, offset):
+    result = []
+    for ch in message:
+        if ch.isalpha():
+            base = ord('a') if ch.islower() else ord('A')
+            result.append(chr((ord(ch) - base + offset) % 26 + base))
+        else:
+            result.append(ch)
+    return ''.join(result)
+
+
+def caesar_decode(message, offset):
+    return caesar_encode(message, -offset)
+```

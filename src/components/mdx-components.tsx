@@ -1,7 +1,9 @@
 import Playground from "./Playground";
+import Quiz from "./Quiz";
 
 export const mdxComponents = {
     Playground,
+    Quiz,
     h1: (props: any) => <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 mt-10" {...props} />,
     h2: (props: any) => <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 mt-10 mb-4" {...props} />,
     h3: (props: any) => <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mt-8 mb-4" {...props} />,
