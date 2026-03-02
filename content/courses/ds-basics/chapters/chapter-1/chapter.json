@@ -1,21 +1,21 @@
 {
-  "chapterId": "chapter-1",
-  "courseId": "ds-basics",
-  "chapterSlug": "chapter-1",
-  "chapterTitle": "Module 1",
-  "order": 1,
-  "lessonOrder": [
-    "dsbasicswelcometofoundationsofdatascience",
-    "dsbasicsintrotodatascienceintern",
-    "dsbasicssql",
-    "dsbasicssqlchurn",
-    "dsbasicscode-snippet",
-    "dsbasicspython",
-    "dsbasicspandas",
-    "ds-basics-no-title",
-    "ds-basics-enter-fullscreen-code-editor",
-    "ds-basics-checker-dense",
-    "ds-basics-spinner"
-  ],
-  "estimatedMinutes": 200
+    "chapterId": "chapter-1",
+    "courseId": "ds-basics",
+    "chapterSlug": "chapter-1",
+    "chapterTitle": "Module 1",
+    "order": 1,
+    "lessonOrder": [
+        "welcometofoundationsofdatascience",
+        "introtodatascienceintern",
+        "sql",
+        "sqlchurn",
+        "code-snippet",
+        "python",
+        "pandas",
+        "ds-basics-no-title",
+        "ds-basics-enter-fullscreen-code-editor",
+        "ds-basics-checker-dense",
+        "ds-basics-spinner"
+    ],
+    "estimatedMinutes": 200
 }

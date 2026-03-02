@@ -1,15 +1,15 @@
 {
-  "chapterId": "chapter-1",
-  "courseId": "ds-advanced",
-  "chapterSlug": "chapter-1",
-  "chapterTitle": "Module 1",
-  "order": 1,
-  "lessonOrder": [
-    "dsadvanceddata-and-programming-foundations-for-ai-ai-academy-2_9_2026-105312-pm",
-    "ds-advanced-enter-fullscreen-code-editor",
-    "ds-advanced-no-title",
-    "ds-advanced-exit-fullscreen-code-editor",
-    "ds-advanced-spinner"
-  ],
-  "estimatedMinutes": 20
+    "chapterId": "chapter-1",
+    "courseId": "ds-advanced",
+    "chapterSlug": "chapter-1",
+    "chapterTitle": "Module 1",
+    "order": 1,
+    "lessonOrder": [
+        "data-and-programming-foundations-for-ai-ai-academy-2-9-2026-105312-pm",
+        "ds-advanced-enter-fullscreen-code-editor",
+        "ds-advanced-no-title",
+        "ds-advanced-exit-fullscreen-code-editor",
+        "ds-advanced-spinner"
+    ],
+    "estimatedMinutes": 20
 }
