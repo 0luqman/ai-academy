@@ -1,5 +1,0 @@
-{
-  "name": "AI Academy by RiWoT",
-  "description": "A minimalist, AI-powered Python learning assistant designed for everyone, from beginners to experts. Features a ChatGPT-like interface and data export/import capabilities.",
-  "requestFramePermissions": ["microphone", "camera"]
-}
