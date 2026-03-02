@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, Content } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export interface AIResponse {
     content: string;
@@ -29,7 +29,6 @@ export class AIService {
     public async generateResponse(
         prompt: string,
         context: string,
-        history: { role: 'user' | 'model', text: string }[] = [],
         config: AIRequestConfig = {}
     ): Promise<AIResponse> {
         if (!this.genAI) {
