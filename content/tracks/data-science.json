@@ -1,7 +1,7 @@
 {
   "trackId": "data-science",
   "trackTitle": "Data Science",
-  "description": "Comprehensive path for data science.",
+  "description": "Master the data lifecycle, from SQL exploration to advanced predictive modeling and visualization.",
   "courseOrder": [
     "ds-basics",
     "ds-advanced"

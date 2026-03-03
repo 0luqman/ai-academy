@@ -41,6 +41,7 @@ function generateIndex() {
         return {
             trackId: track.trackId,
             trackTitle: track.trackTitle,
+            externalUrl: track.externalUrl,
             courses: track.courseOrder.map(courseSlug => {
                 const course = getCourse(courseSlug);
                 if (!course) return null;
