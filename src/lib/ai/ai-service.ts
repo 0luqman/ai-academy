@@ -73,10 +73,23 @@ export class AIService {
                 });
             }
 
+            // Formatting history for GoogleGenerativeAI
+            // Ensure roles are alternating user/model
+            const formattedHistory = (config.history || []).map((msg: any) => {
+                // Handle different history formats
+                const role = msg.role === 'assistant' || msg.role === 'model' ? 'model' : 'user';
+                const text = msg.parts?.[0]?.text || msg.content || msg.text;
+                return {
+                    role,
+                    parts: [{ text: text || "" }]
+                };
+            });
+
             const chat = model.startChat({
-                history: config.history || [],
+                history: formattedHistory,
                 generationConfig: {
-                    maxOutputTokens: 1000,
+                    maxOutputTokens: 2048,
+                    temperature: 0.7,
                 },
             });
 

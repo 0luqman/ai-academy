@@ -99,7 +99,11 @@ export default function AITutor() {
         <>
             {/* Trigger Button */}
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                type="button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(!isOpen);
+                }}
                 className={cn(
                     "fixed bottom-8 right-8 transition-all z-50 group overflow-hidden",
                     isOpen
@@ -134,6 +138,7 @@ export default function AITutor() {
                         </div>
                     </div>
                     <button
+                        type="button"
                         onClick={clearHistory}
                         className="p-2 hover:bg-red-500/10 rounded-xl text-muted-foreground hover:text-red-500 transition-colors"
                         title="Clear History"
@@ -161,6 +166,7 @@ export default function AITutor() {
                                 ].map((suggestion, i) => (
                                     <button
                                         key={i}
+                                        type="button"
                                         onClick={() => { setInput(suggestion); }}
                                         className="text-xs font-bold p-3 rounded-xl border border-white/5 bg-muted/30 hover:bg-primary/5 hover:border-primary/20 transition-all text-left"
                                     >
@@ -205,23 +211,28 @@ export default function AITutor() {
 
                 {/* Input Area */}
                 <div className="p-6 border-t border-white/5 bg-muted/20">
-                    <div className="flex gap-3">
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSend();
+                        }}
+                        className="flex gap-3"
+                    >
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                             placeholder="Type your message..."
                             className="flex-1 bg-background border border-white/10 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted-foreground/50"
                         />
                         <button
-                            onClick={handleSend}
+                            type="submit"
                             disabled={isLoading || !input.trim()}
                             className="bg-primary text-primary-foreground p-3 rounded-2xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 disabled:opacity-50 transition-all"
                         >
                             <Send size={20} />
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </>

@@ -25,6 +25,7 @@ export default function ChatPage() {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [selectedModel, setSelectedModel] = useState('gemma-3-27b-it');
     const scrollRef = useRef<HTMLDivElement>(null);
 
     // Initialize from localStorage
@@ -128,11 +129,12 @@ export default function ChatPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    prompt: input,
+                    message: input,
+                    model: selectedModel,
                     context: "Premium full-screen AI Tutor interface.",
-                    history: convo.messages.slice(0, -1).map(m => ({
+                    messages: convo.messages.slice(0, -1).map(m => ({
                         role: m.role,
-                        parts: [{ text: m.text }]
+                        content: m.text
                     }))
                 })
             });
@@ -147,7 +149,7 @@ export default function ChatPage() {
                 const modelMsg: Message = {
                     id: (Date.now() + 1).toString(),
                     role: 'model',
-                    text: data.content,
+                    text: data.content || data.reply,
                     timestamp: Date.now()
                 };
                 updatedConvo.messages = [...updatedConvo.messages, modelMsg];
@@ -246,9 +248,21 @@ export default function ChatPage() {
                                 <Menu size={20} />
                             </button>
                         )}
-                        <div className="flex items-center gap-2">
-                            <Sparkles size={16} className="text-primary animate-pulse" />
-                            <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Gemma 3 Architecture</span>
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <Sparkles size={16} className="text-primary animate-pulse" />
+                                <span className="text-xs font-black uppercase tracking-widest text-muted-foreground hidden sm:inline">Gemma 3 Architecture</span>
+                            </div>
+
+                            <select
+                                value={selectedModel}
+                                onChange={(e) => setSelectedModel(e.target.value)}
+                                className="bg-[#1a1a1c] text-muted-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg border border-white/5 focus:outline-none focus:ring-1 focus:ring-primary/50 cursor-pointer hover:bg-[#252528] transition-colors"
+                            >
+                                <option value="gemma-3-27b-it">Gemma 3 27B</option>
+                                <option value="gemma-3-12b-it">Gemma 3 12B</option>
+                                <option value="gemma-3-4b-it">Gemma 3 4B</option>
+                            </select>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -341,7 +355,13 @@ export default function ChatPage() {
 
                 {/* Input Area */}
                 <div className="p-6 md:pb-12 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b] to-transparent">
-                    <div className="max-w-3xl mx-auto relative group">
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSend();
+                        }}
+                        className="max-w-3xl mx-auto relative group"
+                    >
                         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 blur opacity-0 group-focus-within:opacity-100 transition-opacity rounded-[2.5rem]" />
                         <div className="relative flex items-end gap-3 bg-[#0d0d0e] border border-white/10 rounded-[2.5rem] p-2 pr-4 shadow-2xl transition-all focus-within:border-primary/50">
                             <textarea
@@ -353,29 +373,29 @@ export default function ChatPage() {
                                         handleSend();
                                     }
                                 }}
-                                placeholder="Message Gemma 3..."
+                                placeholder={`Message ${selectedModel.split('-')[2].toUpperCase()}...`}
                                 rows={1}
                                 className="flex-1 bg-transparent border-none focus:ring-0 text-sm md:text-base py-4 px-6 max-h-40 resize-none scrollbar-none placeholder:text-muted-foreground/30"
                                 style={{ height: 'auto' }}
                             />
                             <button
-                                onClick={handleSend}
+                                type="submit"
                                 disabled={isLoading || !input.trim()}
                                 className="mb-1 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20 hover:scale-110 active:scale-95 disabled:opacity-50 transition-all shrink-0"
                             >
                                 <Send size={20} />
                             </button>
                         </div>
-                        <div className="mt-3 flex items-center justify-center gap-4">
-                            <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
-                                <Command size={10} />
-                                <span>Enter to Send</span>
-                            </div>
-                            <div className="w-1 h-1 rounded-full bg-white/5" />
-                            <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
-                                <Plus size={10} />
-                                <span>Shift + Enter for new line</span>
-                            </div>
+                    </form>
+                    <div className="mt-3 flex items-center justify-center gap-4">
+                        <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
+                            <Command size={10} />
+                            <span>Enter to Send</span>
+                        </div>
+                        <div className="w-1 h-1 rounded-full bg-white/5" />
+                        <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
+                            <Plus size={10} />
+                            <span>Shift + Enter for new line</span>
                         </div>
                     </div>
                 </div>
