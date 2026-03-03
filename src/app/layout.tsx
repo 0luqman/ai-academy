@@ -37,6 +37,7 @@ export default function RootLayout({
                         <nav className="hidden md:flex items-center gap-10">
                             {[
                                 { name: 'Courses', href: '/learn' },
+                                { name: 'Chat', href: '/chat' },
                                 { name: 'Setup', href: '/setup' },
                                 { name: 'About', href: '/about' }
                             ].map((link) => (
