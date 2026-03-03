@@ -1,5 +1,11 @@
 [
   {
+    "trackId": "ai-for-beginners",
+    "trackTitle": "AI For Beginners",
+    "externalUrl": "https://ai-route.vercel.app/en/docs/0-course-setup/setup",
+    "courses": []
+  },
+  {
     "trackId": "data-science",
     "trackTitle": "Data Science",
     "courses": [

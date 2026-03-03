@@ -9,6 +9,7 @@ export interface Track {
     trackTitle: string;
     description: string;
     courseOrder: string[];
+    externalUrl?: string;
 }
 
 export interface Course {
