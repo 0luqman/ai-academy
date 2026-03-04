@@ -2,6 +2,7 @@ import { getLesson, getCourse, getChapter, getLessonsInChapter, getChaptersInCou
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/mdx-components";
+import { ContentErrorBoundary } from "@/components/ContentErrorBoundary";
 import Link from "next/link";
 import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket } from "lucide-react";
 
@@ -23,9 +24,9 @@ export default function LessonPage({
     const nextLesson = currentLessonIndex < lessons.length - 1 ? lessons[currentLessonIndex + 1] : null;
 
     return (
-        <div className="flex min-h-screen bg-background/50 backdrop-blur-3xl">
+        <div className="flex min-h-screen bg-background/50 backdrop-blur-xl">
             {/* Sidebar Navigation */}
-            <aside className="hidden w-[320px] flex-col border-r bg-card/30 backdrop-blur-xl md:flex">
+            <aside className="hidden w-[320px] flex-col border-r bg-card/30 backdrop-blur-lg md:flex">
                 <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto p-8 scrollbar-thin scrollbar-thumb-primary/10 scrollbar-track-transparent">
                     <Link href={`/learn/${params.track}/${params.course}`} className="text-sm font-bold text-muted-foreground hover:text-primary mb-8 inline-flex items-center gap-2 transition-colors group">
                         <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
@@ -151,10 +152,12 @@ export default function LessonPage({
                         prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                         prose-strong:text-foreground prose-strong:font-bold
                         prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10 prose-img:shadow-2xl">
-                        <MDXRemote
-                            source={lesson.content}
-                            components={mdxComponents}
-                        />
+                        <ContentErrorBoundary>
+                            <MDXRemote
+                                source={lesson.content}
+                                components={mdxComponents}
+                            />
+                        </ContentErrorBoundary>
                     </article>
 
                     {/* Navigation Footer */}
