@@ -12,8 +12,19 @@ interface PlaygroundProps {
     initialCode?: string;
 }
 
+const DEFAULT_CODE = `# Welcome to the Interactive Python IDE!
+# Write your code here and click "Run Code" to execute.
+
+print("Hello, AI Academy!")
+
+# Try some math
+a = 10
+b = 5
+print(f"The sum of {a} and {b} is {a + b}")
+`;
+
 export default function Playground({ initialCode }: PlaygroundProps) {
-    const [code, setCode] = useState(initialCode || '');
+    const [code, setCode] = useState(initialCode || DEFAULT_CODE);
     const [output, setOutput] = useState('');
     const [isRunning, setIsRunning] = useState(false);
     const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
@@ -66,7 +77,7 @@ sys.stderr = io.StringIO()
     };
 
     const resetCode = () => {
-        setCode(initialCode || '');
+        setCode(initialCode || DEFAULT_CODE);
         setOutput('');
         setError(null);
     };
