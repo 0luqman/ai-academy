@@ -123,7 +123,7 @@ export default function AITutor() {
 
             {/* Chat Window */}
             <div className={cn(
-                "fixed bottom-28 right-8 w-[440px] h-[650px] bg-background border border-white/10 rounded-[2.5rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] z-50 flex flex-col overflow-hidden transition-all transform origin-bottom-right duration-500 backdrop-blur-3xl",
+                "fixed bottom-28 right-8 w-[440px] h-[650px] bg-background/90 border border-white/10 rounded-[2.5rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] z-50 flex flex-col overflow-hidden transition-all transform origin-bottom-right duration-500 backdrop-blur-xl",
                 isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-95 opacity-0 translate-y-10 pointer-events-none"
             )}>
                 {/* Header */}

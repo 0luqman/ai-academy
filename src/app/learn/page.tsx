@@ -59,6 +59,7 @@ export default function LearnPage() {
                                 href={isExternal ? track.externalUrl! : `/learn/${track.trackId}`}
                                 target={isExternal ? "_blank" : undefined}
                                 rel={isExternal ? "noopener noreferrer" : undefined}
+                                prefetch={false}
                                 className="group relative rounded-[3rem] border border-white/5 bg-muted/20 p-10 transition-all duration-500 hover:border-primary/20 hover:bg-muted/30 shadow-2xl block overflow-hidden"
                             >
                                 <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] group-hover:rotate-12 transition-all duration-700">

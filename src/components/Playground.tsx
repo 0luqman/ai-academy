@@ -24,7 +24,21 @@ print(f"The sum of {a} and {b} is {a + b}")
 `;
 
 export default function Playground({ initialCode }: PlaygroundProps) {
-    const [code, setCode] = useState(initialCode || DEFAULT_CODE);
+    // Robust prop handling for MDX
+    const getInitialCode = () => {
+        if (!initialCode) return DEFAULT_CODE;
+        try {
+            // Check if it's a JSON string (sometimes MDX passes it this way)
+            if (typeof initialCode === 'string' && (initialCode.startsWith('"') || initialCode.startsWith('{') || initialCode.startsWith('['))) {
+                return JSON.parse(initialCode);
+            }
+        } catch (e) {
+            // Not JSON, use as is
+        }
+        return initialCode;
+    };
+
+    const [code, setCode] = useState(getInitialCode());
     const [output, setOutput] = useState('');
     const [isRunning, setIsRunning] = useState(false);
     const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');

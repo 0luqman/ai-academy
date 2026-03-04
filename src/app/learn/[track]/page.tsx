@@ -37,6 +37,7 @@ export default function TrackPage({ params }: { params: { track: string } }) {
                         </div>
                         <Link
                             href={`/learn/${track.trackId}/${course.courseSlug}`}
+                            prefetch={false}
                             className="mt-4 sm:mt-0 inline-flex h-9 items-center justify-center rounded-lg bg-primary px-6 text-xs font-semibold text-primary-foreground shadow transition-colors hover:bg-primary/90"
                         >
                             Enter

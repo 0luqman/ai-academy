@@ -15,7 +15,21 @@ interface QuizProps {
     questions: Question[];
 }
 
-export default function Quiz({ questions }: QuizProps) {
+export default function Quiz({ questions: rawQuestions }: QuizProps) {
+    // Robust prop handling for MDX
+    const questions = React.useMemo(() => {
+        if (!rawQuestions) return [];
+        if (Array.isArray(rawQuestions)) return rawQuestions;
+        try {
+            if (typeof rawQuestions === 'string') {
+                return JSON.parse(rawQuestions);
+            }
+        } catch (e) {
+            console.error("Failed to parse Quiz questions", e);
+        }
+        return [];
+    }, [rawQuestions]);
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -81,6 +95,14 @@ export default function Quiz({ questions }: QuizProps) {
         );
     }
 
+    if (questions.length === 0) {
+        return (
+            <div className="bg-card border rounded-2xl p-8 text-center shadow-lg my-8">
+                <p className="text-muted-foreground italic">No quiz questions available for this lesson.</p>
+            </div>
+        );
+    }
+
     const question = questions[currentQuestion];
 
     return (
@@ -103,7 +125,7 @@ export default function Quiz({ questions }: QuizProps) {
                 </h3>
 
                 <div className="space-y-3">
-                    {question.options.map((option, index) => {
+                    {question.options.map((option: string, index: number) => {
                         const isSelected = selectedOption === index;
                         const isCorrect = index === question.correctAnswer;
                         const showCorrect = isSubmitted && isCorrect;
