@@ -35,7 +35,7 @@
               },
               {
                 "lessonSlug": "code-snippet",
-                "lessonTitle": "Code SNIPPET"
+                "lessonTitle": "SQL Code Snippet: User Churn Analysis"
               },
               {
                 "lessonSlug": "python",
@@ -46,8 +46,8 @@
                 "lessonTitle": "Pandas"
               },
               {
-                "lessonSlug": "ds-basics-no-title",
-                "lessonTitle": "No title"
+                "lessonSlug": "intro-to-eda",
+                "lessonTitle": "Introduction to Exploratory Data Analysis"
               },
               {
                 "lessonSlug": "ds-basics-enter-fullscreen-code-editor",
@@ -74,16 +74,16 @@
             "chapterTitle": "Module 1",
             "lessons": [
               {
-                "lessonSlug": "data-and-programming-foundations-for-ai-ai-academy-2-9-2026-105312-pm",
-                "lessonTitle": "Data And Programming Foundations For AI ｜ AI Academy By Riwot (2 9 2026 10：53：12 Pm)"
+                "lessonSlug": "data-programming-foundations",
+                "lessonTitle": "Data and Programming Foundations for AI"
               },
               {
                 "lessonSlug": "ds-advanced-enter-fullscreen-code-editor",
                 "lessonTitle": "Enter Fullscreen Code Editor"
               },
               {
-                "lessonSlug": "ds-advanced-no-title",
-                "lessonTitle": "No title"
+                "lessonSlug": "intro-to-linear-algebra",
+                "lessonTitle": "Introduction to Linear Algebra"
               },
               {
                 "lessonSlug": "ds-advanced-exit-fullscreen-code-editor",
@@ -214,8 +214,8 @@
                 "lessonTitle": "Review"
               },
               {
-                "lessonSlug": "learnpython-2controlflow-spacepy-at-main-ai-academy-learnpython",
-                "lessonTitle": "Learn Python 2 Control Flow Space Py At Main · AI Academy By Riwot Learn Python"
+                "lessonSlug": "python-control-flow-lab",
+                "lessonTitle": "Python Control Flow Lab"
               },
               {
                 "lessonSlug": "pythoncontrolflowquiz",
@@ -260,8 +260,8 @@
                 "lessonTitle": "DS Python Lists2 Project"
               },
               {
-                "lessonSlug": "how-to-install-git-bash-for-windows-complete-setup-guide-ai-academy",
-                "lessonTitle": "How To Install Git Bash For Windows Complete Setup Guide AI Academy By Riwot"
+                "lessonSlug": "git-bash-setup",
+                "lessonTitle": "How to Install Git Bash for Windows"
               },
               {
                 "lessonSlug": "code-text",
