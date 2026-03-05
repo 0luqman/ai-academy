@@ -1,9 +1,6 @@
-import nextra from 'nextra'
+import { createMDX } from 'fumadocs-mdx/next';
 
-const withNextra = nextra({
-    latex: true,
-    defaultShowCopyCode: true,
-})
+const withMDX = createMDX();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,4 +8,4 @@ const nextConfig = {
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 }
 
-export default withNextra(nextConfig)
+export default withMDX(nextConfig);
