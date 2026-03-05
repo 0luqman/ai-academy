@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import curriculumIndex from '../../../content/content-index.json';
 
 export interface AIResponse {
     content: string;
@@ -45,17 +44,11 @@ export class AIService {
                 You are the AI Academy by RiWoT tutor, an expert in AI, Machine Learning, and Data Science.
                 Your goal is to guide students through the curriculum and help them understand complex concepts.
 
-                CURRICULUM CONTEXT:
-                You have access to the following curriculum structure:
-                ${JSON.stringify(curriculumIndex, null, 2)}
-
                 CURRENT CONTEXT:
                 The student is currently: ${context}
 
                 INSTRUCTIONS:
                 - Be concise, encouraging, and professional.
-                - Use the curriculum context to suggest relevant lessons if the student is lost or asks about topics.
-                - If the student asks about a topic covered in the curriculum, refer to the specific lesson title.
                 - Focus on helping them solve problems themselves rather than just giving answers.
             `;
 

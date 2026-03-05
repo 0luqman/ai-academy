@@ -1,23 +1,15 @@
-import { getAllTracks, Track } from "@/lib/content";
 import Link from "next/link";
 import { Brain, Database, LineChart, Cpu, ArrowRight, Sparkles, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function LearnPage() {
-    let tracks: Track[] = [];
-    try {
-        tracks = getAllTracks();
-    } catch (e) {
-        console.error("Failed to load tracks:", e);
-    }
-
     const order = ['ai-for-beginners', 'machine-learning', 'data-science'];
 
-    const displayTracks: (Track & { icon: any, color: string })[] = (tracks.length > 0 ? tracks : [
-        { trackId: 'ai-for-beginners', trackTitle: 'AI For Beginners', description: 'Built for beginners to learn Neural Networks, Computer Vision, NLP, and more.', courseOrder: [], externalUrl: 'https://ai-route.vercel.app/en/docs/0-course-setup/setup' },
-        { trackId: 'machine-learning', trackTitle: 'Machine Learning', description: 'The comprehensive path for modern AI architects. Master neural networks, scaling models, and production AI.', courseOrder: [] },
-        { trackId: 'data-science', trackTitle: 'Data Science', description: 'Master the data lifecycle, from SQL exploration to advanced predictive modeling and visualization.', courseOrder: [] }
-    ]).sort((a, b) => order.indexOf(a.trackId) - order.indexOf(b.trackId))
+    const displayTracks = [
+        { trackId: 'ai-for-beginners', trackTitle: 'AI For Beginners', description: 'Built for beginners to learn Neural Networks, Computer Vision, NLP, and more.', externalUrl: 'https://ai-route.vercel.app/en/docs/0-course-setup/setup' },
+        { trackId: 'machine-learning', trackTitle: 'Machine Learning', description: 'The comprehensive path for modern AI architects. Master neural networks, scaling models, and production AI.' },
+        { trackId: 'data-science', trackTitle: 'Data Science', description: 'Master the data lifecycle, from SQL exploration to advanced predictive modeling and visualization.' }
+    ].sort((a, b) => order.indexOf(a.trackId) - order.indexOf(b.trackId))
         .map(t => {
             if (t.trackId === 'machine-learning') return { ...t, icon: Cpu, color: "text-primary bg-primary/10 border-primary/20" };
             if (t.trackId === 'data-science') return { ...t, icon: Database, color: "text-blue-500 bg-blue-500/10 border-blue-500/20" };
@@ -53,10 +45,11 @@ export default function LearnPage() {
                     {displayTracks.map((track) => {
                         const Icon = track.icon;
                         const isExternal = !!track.externalUrl;
+                        const href = isExternal ? track.externalUrl! : `/docs/${track.trackId}`;
                         return (
                             <Link
                                 key={track.trackId}
-                                href={isExternal ? track.externalUrl! : `/learn/${track.trackId}`}
+                                href={href}
                                 target={isExternal ? "_blank" : undefined}
                                 rel={isExternal ? "noopener noreferrer" : undefined}
                                 className="group relative rounded-[3rem] border border-white/5 bg-muted/20 p-10 transition-all duration-500 hover:border-primary/20 hover:bg-muted/30 shadow-2xl block overflow-hidden"

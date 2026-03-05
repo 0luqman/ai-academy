@@ -1,9 +1,9 @@
-import { useMDXComponents as getThemeComponents } from 'nextra-theme-docs'
-import { mdxComponents as customComponents } from '@/components/mdx-components'
+import type { MDXComponents } from 'mdx/types';
+import { mdxComponents as customComponents } from '@/components/mdx-components';
 
-export function useMDXComponents(components: any): any {
-    return {
-        ...getThemeComponents(components),
-        ...customComponents
-    }
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  return {
+    ...components,
+    ...customComponents,
+  };
 }
