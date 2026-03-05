@@ -2,6 +2,7 @@ import { getLesson, getCourse, getChapter, getLessonsInChapter, getChaptersInCou
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/mdx-components";
+import ContentErrorBoundary from "@/components/ContentErrorBoundary";
 import Link from "next/link";
 import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket } from "lucide-react";
 
@@ -95,12 +96,14 @@ export default function LessonPage({
             <main className="flex-1 w-full relative">
                 <div className="max-w-4xl px-6 py-12 md:px-16 md:py-20 mx-auto">
                     {/* Breadcrumbs */}
-                    <nav className="mb-12 flex items-center space-x-2 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
-                        <Link href="/learn" className="hover:text-primary transition-colors">Academy</Link>
-                        <ChevronRight size={12} className="opacity-50" />
-                        <Link href={`/learn/${params.track}`} className="hover:text-primary transition-colors">{params.track.replace('-', ' ')}</Link>
-                        <ChevronRight size={12} className="opacity-50" />
-                        <span className="text-muted-foreground/80">{course.courseTitle}</span>
+                    <nav className="mb-12 flex items-center space-x-2 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40 overflow-x-auto no-scrollbar whitespace-nowrap pb-2">
+                        <Link href="/learn" className="hover:text-primary transition-colors shrink-0">Academy</Link>
+                        <ChevronRight size={12} className="opacity-50 shrink-0" />
+                        <Link href={`/learn/${params.track}`} className="hover:text-primary transition-colors shrink-0">{params.track.replace(/-/g, ' ')}</Link>
+                        <ChevronRight size={12} className="opacity-50 shrink-0" />
+                        <Link href={`/learn/${params.track}/${params.course}`} className="hover:text-primary transition-colors shrink-0">{course.courseTitle}</Link>
+                        <ChevronRight size={12} className="opacity-50 shrink-0" />
+                        <span className="text-muted-foreground/80 shrink-0">{chapter.chapterTitle}</span>
                     </nav>
 
                     {/* Header */}
@@ -116,6 +119,12 @@ export default function LessonPage({
                             <div className="flex items-center gap-2 bg-muted/50 text-muted-foreground px-4 py-1.5 rounded-full text-xs font-bold border border-white/5">
                                 <Clock size={14} />
                                 ~{lesson.frontmatter.estimatedMinutes} mins
+                        </div>
+                        <div className="h-1 flex-1 min-w-[100px] bg-muted/30 rounded-full overflow-hidden ml-auto max-w-[200px]">
+                            <div
+                                className="h-full bg-primary shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-1000"
+                                style={{ width: `${((currentLessonIndex + 1) / lessons.length) * 100}%` }}
+                            />
                             </div>
                         </div>
 
@@ -151,10 +160,12 @@ export default function LessonPage({
                         prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                         prose-strong:text-foreground prose-strong:font-bold
                         prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10 prose-img:shadow-2xl">
-                        <MDXRemote
-                            source={lesson.content}
-                            components={mdxComponents}
-                        />
+                        <ContentErrorBoundary>
+                            <MDXRemote
+                                source={lesson.content}
+                                components={mdxComponents}
+                            />
+                        </ContentErrorBoundary>
                     </article>
 
                     {/* Navigation Footer */}

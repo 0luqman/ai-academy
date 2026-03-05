@@ -60,9 +60,15 @@ export class AIService {
             `;
 
             try {
+                // Some older models or certain configurations might not support systemInstruction parameter
+                // We prepend it to history/prompt as a fallback or if using models that prefer it that way
                 model = this.genAI.getGenerativeModel({
                     model: targetModel,
-                    systemInstruction: systemInstruction
+                    // systemInstruction is natively supported by Gemini 1.5+ and Gemma-3
+                    systemInstruction: {
+                        role: "system",
+                        parts: [{ text: systemInstruction }]
+                    }
                 });
             } catch (err) {
                 console.warn(`Primary model ${targetModel} failed, trying fallback...`);

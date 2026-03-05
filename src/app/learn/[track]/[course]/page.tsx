@@ -11,7 +11,7 @@ export default function CoursePage({ params }: { params: { track: string, course
     return (
         <div className="container max-w-4xl py-12">
             <Link href={`/learn/${params.track}`} className="text-sm font-medium text-muted-foreground hover:text-foreground mb-8 inline-flex items-center">
-                ← Back to {params.track.replace('-', ' ')}
+                ← Back to {params.track.replace(/-/g, ' ')}
             </Link>
 
             <div className="mb-12 border-b pb-8">

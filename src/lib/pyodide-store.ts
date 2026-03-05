@@ -23,6 +23,16 @@ export async function getPyodide(): Promise<PyodideInstance> {
             indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/'
         });
 
+        // Initialize with basic output redirection setup
+        await pyodide.runPythonAsync(`
+import sys
+import io
+def setup_io():
+    sys.stdout = io.StringIO()
+    sys.stderr = io.StringIO()
+setup_io()
+        `);
+
         return pyodide;
     })();
 

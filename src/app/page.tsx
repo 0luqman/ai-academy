@@ -10,6 +10,7 @@ export default function Home() {
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full animate-pulse" />
                 <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-purple-500/10 blur-[100px] rounded-full" />
                 <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-blue-500/10 blur-[120px] rounded-full" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
             </div>
 
             {/* Hero Section */}

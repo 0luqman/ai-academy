@@ -47,13 +47,8 @@ export default function Playground({ initialCode }: PlaygroundProps) {
 
             const pyodide = pyodideRef.current;
 
-            // Better way to capture output using StringIO
-            pyodide.runPython(`
-import sys
-import io
-sys.stdout = io.StringIO()
-sys.stderr = io.StringIO()
-            `);
+            // Reset buffers
+            pyodide.runPython("sys.stdout = io.StringIO(); sys.stderr = io.StringIO()");
 
             try {
                 await pyodide.runPythonAsync(code);
@@ -66,7 +61,7 @@ sys.stderr = io.StringIO()
 
             if (stdout) setOutput(stdout);
             if (stderr) {
-                setError(prev => prev ? prev + "\n" + stderr : stderr);
+                setError(prev => prev ? (prev.includes(stderr) ? prev : prev + "\n" + stderr) : stderr);
             }
         } catch (e: any) {
             console.error("Runner Error:", e);
