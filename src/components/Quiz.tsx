@@ -15,7 +15,19 @@ interface QuizProps {
     questions: Question[];
 }
 
-export default function Quiz({ questions }: QuizProps) {
+export default function Quiz({ questions: initialQuestions }: QuizProps) {
+    const questions = React.useMemo(() => {
+        if (typeof initialQuestions === 'string') {
+            try {
+                return JSON.parse(initialQuestions);
+            } catch (e) {
+                console.error("Failed to parse Quiz questions:", e);
+                return [];
+            }
+        }
+        return initialQuestions || [];
+    }, [initialQuestions]);
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -103,7 +115,7 @@ export default function Quiz({ questions }: QuizProps) {
                 </h3>
 
                 <div className="space-y-3">
-                    {question.options.map((option, index) => {
+                    {question.options.map((option: string, index: number) => {
                         const isSelected = selectedOption === index;
                         const isCorrect = index === question.correctAnswer;
                         const showCorrect = isSubmitted && isCorrect;
