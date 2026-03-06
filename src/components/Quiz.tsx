@@ -15,8 +15,31 @@ interface QuizProps {
     questions: Question[];
 }
 
-export default function Quiz({ questions }: QuizProps) {
+export default function Quiz({ questions: initialQuestions }: QuizProps) {
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    // Handle both object and stringified JSON props
+    React.useEffect(() => {
+        if (typeof initialQuestions === 'string') {
+            try {
+                setQuestions(JSON.parse(initialQuestions));
+            } catch (e) {
+                console.error("Failed to parse Quiz questions JSON:", e);
+            }
+        } else if (Array.isArray(initialQuestions)) {
+            setQuestions(initialQuestions);
+        }
+    }, [initialQuestions]);
+
+    if (!questions || questions.length === 0) {
+        return (
+            <div className="p-8 text-center text-muted-foreground italic border rounded-2xl my-8">
+                No quiz questions provided or malformed data.
+            </div>
+        );
+    }
+
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [score, setScore] = useState(0);

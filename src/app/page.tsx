@@ -57,12 +57,12 @@ export default function Home() {
 
                     <div className="mt-20 grid grid-cols-2 gap-12 border-t border-white/5 pt-12 animate-in fade-in slide-in-from-bottom-20 duration-1000 delay-400">
                         <div className="group cursor-default">
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 group-hover:text-primary transition-colors">Platform Architect</p>
+                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 group-hover:text-primary transition-colors">Lead Platform Architect</p>
                             <p className="mt-3 text-2xl font-bold tracking-tight">Mir Luqman</p>
                             <div className="mt-2 h-0.5 w-8 bg-primary/40 group-hover:w-full transition-all duration-500" />
                         </div>
                         <div className="group cursor-default">
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 group-hover:text-primary transition-colors">Full-Stack Architect</p>
+                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 group-hover:text-primary transition-colors">Lead Systems Engineer</p>
                             <p className="mt-3 text-2xl font-bold tracking-tight">Ibraheem Rashid</p>
                             <div className="mt-2 h-0.5 w-8 bg-primary/40 group-hover:w-full transition-all duration-500" />
                         </div>

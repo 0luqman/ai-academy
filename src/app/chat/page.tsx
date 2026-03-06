@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, Code2, Trash2, User, Bot, Loader2, Plus, MessageSquare, Menu, X, ChevronRight, Command } from 'lucide-react';
+import { Send, Trash2, User, Bot, Loader2, Sparkles, ChevronLeft, Brain } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -9,49 +9,32 @@ interface Message {
     id: string;
     role: 'user' | 'model';
     text: string;
-    timestamp: number;
-}
-
-interface Conversation {
-    id: string;
-    title: string;
-    messages: Message[];
-    updatedAt: number;
 }
 
 export default function ChatPage() {
-    const [conversations, setConversations] = useState<Conversation[]>([]);
-    const [activeId, setActiveId] = useState<string | null>(null);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [selectedModel, setSelectedModel] = useState('gemma-3-27b-it');
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    // Initialize from localStorage
+    // Persistence
     useEffect(() => {
-        const saved = localStorage.getItem('ai-academy-chats');
+        const saved = localStorage.getItem('ai-tutor-history');
         if (saved) {
             try {
-                const parsed = JSON.parse(saved);
-                setConversations(parsed);
-                if (parsed.length > 0) {
-                    setActiveId(parsed[0].id);
-                }
+                setMessages(JSON.parse(saved));
             } catch (e) {
-                console.error("Failed to parse saved chats", e);
+                console.error("Failed to load chat history", e);
             }
         }
     }, []);
 
-    // Save to localStorage
     useEffect(() => {
-        if (conversations.length > 0) {
-            localStorage.setItem('ai-academy-chats', JSON.stringify(conversations));
+        if (messages.length > 0) {
+            localStorage.setItem('ai-tutor-history', JSON.stringify(messages));
         }
-    }, [conversations]);
+    }, [messages]);
 
-    // Scroll to bottom
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTo({
@@ -59,68 +42,19 @@ export default function ChatPage() {
                 behavior: 'smooth'
             });
         }
-    }, [conversations, activeId, isLoading]);
+    }, [messages, isLoading]);
 
-    const activeConversation = conversations.find(c => c.id === activeId);
-
-    const startNewChat = () => {
-        const newChat: Conversation = {
-            id: Date.now().toString(),
-            title: 'New Conversation',
-            messages: [],
-            updatedAt: Date.now()
-        };
-        setConversations([newChat, ...conversations]);
-        setActiveId(newChat.id);
-    };
-
-    const deleteConversation = (id: string, e: React.MouseEvent) => {
-        e.stopPropagation();
-        const filtered = conversations.filter(c => c.id !== id);
-        setConversations(filtered);
-        if (activeId === id) {
-            setActiveId(filtered.length > 0 ? filtered[0].id : null);
-        }
+    const clearHistory = () => {
+        setMessages([]);
+        localStorage.removeItem('ai-tutor-history');
     };
 
     const handleSend = async () => {
         if (!input.trim() || isLoading) return;
 
-        let currentId = activeId;
-        let updatedConversations = [...conversations];
-
-        if (!currentId) {
-            const newChat: Conversation = {
-                id: Date.now().toString(),
-                title: input.slice(0, 30) + (input.length > 30 ? '...' : ''),
-                messages: [],
-                updatedAt: Date.now()
-            };
-            updatedConversations = [newChat, ...conversations];
-            currentId = newChat.id;
-            setActiveId(currentId);
-        }
-
-        const userMsg: Message = {
-            id: Date.now().toString(),
-            role: 'user',
-            text: input,
-            timestamp: Date.now()
-        };
-
-        const convoIndex = updatedConversations.findIndex(c => c.id === currentId);
-        const convo = { ...updatedConversations[convoIndex] };
-
-        // Update title if it's the first message
-        if (convo.messages.length === 0) {
-            convo.title = input.slice(0, 40) + (input.length > 40 ? '...' : '');
-        }
-
-        convo.messages = [...convo.messages, userMsg];
-        convo.updatedAt = Date.now();
-
-        updatedConversations[convoIndex] = convo;
-        setConversations(updatedConversations);
+        const userMessage: Message = { id: Date.now().toString(), role: 'user', text: input };
+        const newMessages = [...messages, userMessage];
+        setMessages(newMessages);
         setInput('');
         setIsLoading(true);
 
@@ -129,12 +63,11 @@ export default function ChatPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    message: input,
-                    model: selectedModel,
-                    context: "Premium full-screen AI Tutor interface.",
-                    messages: convo.messages.slice(0, -1).map(m => ({
+                    prompt: input,
+                    context: "The user is in the full-screen AI Tutor chat interface. Provide deep technical guidance on AI, Machine Learning, and Data Science.",
+                    history: messages.map(m => ({
                         role: m.role,
-                        content: m.text
+                        parts: [{ text: m.text }]
                     }))
                 })
             });
@@ -142,262 +75,196 @@ export default function ChatPage() {
             const data = await response.json();
             if (data.error) throw new Error(data.error);
 
-            const currentConversations = [...updatedConversations];
-            const idx = currentConversations.findIndex(c => c.id === currentId);
-            if (idx !== -1) {
-                const updatedConvo = { ...currentConversations[idx] };
-                const modelMsg: Message = {
-                    id: (Date.now() + 1).toString(),
-                    role: 'model',
-                    text: data.content || data.reply,
-                    timestamp: Date.now()
-                };
-                updatedConvo.messages = [...updatedConvo.messages, modelMsg];
-                updatedConvo.updatedAt = Date.now();
-                currentConversations[idx] = updatedConvo;
-                setConversations(currentConversations);
-            }
-        } catch (error) {
+            setMessages(prev => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'model',
+                text: data.content
+            }]);
+        } catch (error: any) {
             console.error(error);
-            const currentConversations = [...updatedConversations];
-            const idx = currentConversations.findIndex(c => c.id === currentId);
-            if (idx !== -1) {
-                const updatedConvo = { ...currentConversations[idx] };
-                const errorMsg: Message = {
-                    id: (Date.now() + 1).toString(),
-                    role: 'model',
-                    text: "I encountered an error. Please check your connection or API configuration.",
-                    timestamp: Date.now()
-                };
-                updatedConvo.messages = [...updatedConvo.messages, errorMsg];
-                currentConversations[idx] = updatedConvo;
-                setConversations(currentConversations);
-            }
+            setMessages(prev => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'model',
+                text: "I'm having trouble connecting right now. Please ensure your API key is configured correctly."
+            }]);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="flex h-screen bg-[#0a0a0b] text-foreground overflow-hidden">
+        <div className="flex h-screen bg-background">
             {/* Sidebar */}
-            <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-72 bg-[#0d0d0e] border-r border-white/5 transition-transform duration-300 transform md:relative md:translate-x-0",
-                !isSidebarOpen && "-translate-x-full md:-ml-72"
-            )}>
-                <div className="flex flex-col h-full p-4">
-                    <div className="flex items-center justify-between mb-8 px-2">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <span className="font-black text-sm tracking-tight group-hover:text-primary transition-colors uppercase">AI ACADEMY</span>
-                        </Link>
-                        <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-muted-foreground">
-                            <X size={20} />
-                        </button>
-                    </div>
-
-                    <button
-                        onClick={startNewChat}
-                        className="flex items-center gap-3 w-full p-4 mb-6 rounded-2xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all group"
-                    >
-                        <Plus size={18} className="text-primary group-hover:scale-110 transition-transform" />
-                        <span className="text-sm font-bold">New Chat</span>
-                    </button>
-
-                    <div className="flex-1 overflow-y-auto space-y-2 pr-2 scrollbar-thin scrollbar-thumb-white/5">
-                        <div className="px-2 mb-2">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Recent Conversations</span>
+            <aside className="hidden md:flex w-80 flex-col border-r bg-card/30 backdrop-blur-xl">
+                <div className="p-6 border-b border-white/5">
+                    <Link href="/" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
+                            <Brain size={20} />
                         </div>
-                        {conversations.map(convo => (
+                        <div>
+                            <h1 className="font-black text-sm uppercase tracking-tighter">AI Academy</h1>
+                            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Personal Tutor</p>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className="flex-1 p-6 space-y-8">
+                    <div>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 mb-4">Quick Actions</h3>
+                        <div className="space-y-2">
                             <button
-                                key={convo.id}
-                                onClick={() => setActiveId(convo.id)}
-                                className={cn(
-                                    "flex items-center justify-between w-full p-3 rounded-xl transition-all group",
-                                    activeId === convo.id ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-white/5 text-muted-foreground border border-transparent"
-                                )}
+                                onClick={clearHistory}
+                                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-muted-foreground hover:text-red-500 hover:bg-red-500/5 border border-transparent hover:border-red-500/10 transition-all"
                             >
-                                <div className="flex items-center gap-3 overflow-hidden">
-                                    <MessageSquare size={16} className={cn("shrink-0", activeId === convo.id ? "text-primary" : "text-muted-foreground/40")} />
-                                    <span className="text-sm font-medium truncate">{convo.title}</span>
-                                </div>
-                                <Trash2
-                                    size={14}
-                                    onClick={(e) => deleteConversation(convo.id, e)}
-                                    className="opacity-0 group-hover:opacity-40 hover:!opacity-100 hover:text-red-500 transition-all shrink-0"
-                                />
+                                <Trash2 size={16} />
+                                Clear Conversation
                             </button>
-                        ))}
+                            <Link
+                                href="/learn"
+                                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/10 transition-all"
+                            >
+                                <ChevronLeft size={16} />
+                                Back to Courses
+                            </Link>
+                        </div>
                     </div>
 
-                    <div className="mt-auto pt-4 border-t border-white/5">
-                        <Link href="/learn" className="flex items-center gap-3 w-full p-3 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/5 transition-all">
-                            <Code2 size={18} />
-                            <span className="text-sm font-bold">Return to Lessons</span>
-                        </Link>
+                    <div>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 mb-4">Support</h3>
+                        <a
+                            href="https://discord.gg/qMd7jwV7UG"
+                            target="_blank"
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/10 transition-all"
+                        >
+                            <Sparkles size={16} />
+                            Join Community
+                        </a>
                     </div>
+                </div>
+
+                <div className="p-6 border-t border-white/5">
+                    <p className="text-[10px] text-muted-foreground/30 uppercase tracking-[0.3em] text-center">Powered by RiWoT AI Core</p>
                 </div>
             </aside>
 
-            {/* Main Content */}
-            <main className="flex-1 flex flex-col relative min-w-0 h-full">
+            {/* Main Chat Area */}
+            <main className="flex-1 flex flex-col relative">
                 {/* Header */}
-                <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 bg-[#0a0a0b]/50 backdrop-blur-xl z-10">
+                <header className="h-20 border-b bg-background/50 backdrop-blur-md flex items-center justify-between px-8">
                     <div className="flex items-center gap-4">
-                        {!isSidebarOpen && (
-                            <button onClick={() => setIsSidebarOpen(true)} className="p-2 hover:bg-white/5 rounded-lg transition-colors">
-                                <Menu size={20} />
-                            </button>
-                        )}
-                        <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-2">
-                                <Sparkles size={16} className="text-primary animate-pulse" />
-                                <span className="text-xs font-black uppercase tracking-widest text-muted-foreground hidden sm:inline">Gemma 3 Architecture</span>
-                            </div>
-
-                            <select
-                                value={selectedModel}
-                                onChange={(e) => setSelectedModel(e.target.value)}
-                                className="bg-[#1a1a1c] text-muted-foreground text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg border border-white/5 focus:outline-none focus:ring-1 focus:ring-primary/50 cursor-pointer hover:bg-[#252528] transition-colors"
-                            >
-                                <option value="gemma-3-27b-it">Gemma 3 27B</option>
-                                <option value="gemma-3-12b-it">Gemma 3 12B</option>
-                                <option value="gemma-3-4b-it">Gemma 3 4B</option>
-                            </select>
+                        <div className="md:hidden">
+                           <Link href="/" className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
+                                <Brain size={20} />
+                            </Link>
                         </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">System Online</span>
+                        <div>
+                            <h2 className="text-lg font-black uppercase tracking-tight">Interactive Session</h2>
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Neural Engine Active</span>
+                            </div>
                         </div>
                     </div>
                 </header>
 
-                {/* Messages Container */}
-                <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 md:px-0">
-                    <div className="max-w-3xl mx-auto py-12 space-y-12">
-                        {(!activeConversation || activeConversation.messages.length === 0) ? (
-                            <div className="h-full flex flex-col items-center justify-center text-center space-y-8 py-20">
-                                <div className="space-y-4">
-                                    <h1 className="text-4xl md:text-5xl font-black tracking-tight">How can I help you <br/><span className="hero-gradient italic uppercase">Architect the Future?</span></h1>
-                                    <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-                                        Your premium AI engineering partner, powered by Gemma 3. Optimized for code, math, and data science.
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-xl px-4">
-                                    {[
-                                        "Explain Backpropagation in simple terms",
-                                        "Optimize this Python snippet",
-                                        "Draft a data visualization plan",
-                                        "Help me debug my ML model"
-                                    ].map((suggestion, i) => (
-                                        <button
-                                            key={i}
-                                            onClick={() => setInput(suggestion)}
-                                            className="text-left p-4 rounded-2xl border border-white/5 bg-white/5 hover:bg-primary/5 hover:border-primary/20 transition-all group"
-                                        >
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-xs font-bold">{suggestion}</span>
-                                                <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-primary" />
-                                            </div>
-                                        </button>
-                                    ))}
-                                </div>
+                {/* Messages */}
+                <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 md:px-24 space-y-8 scroll-smooth">
+                    {messages.length === 0 && (
+                        <div className="h-full flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in zoom-in duration-700">
+                            <div className="w-24 h-24 rounded-[2.5rem] bg-muted/50 flex items-center justify-center border border-white/5 shadow-2xl">
+                                <Sparkles size={48} className="text-primary/20" />
                             </div>
-                        ) : (
-                            activeConversation.messages.map((m) => (
-                                <div key={m.id} className={cn(
-                                    "flex gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500",
-                                    m.role === 'user' ? "flex-row-reverse" : ""
-                                )}>
-                                    <div className={cn(
-                                        "w-10 h-10 rounded-xl shrink-0 flex items-center justify-center shadow-lg",
-                                        m.role === 'user' ? "bg-primary text-white" : "bg-muted border border-white/5"
-                                    )}>
-                                        {m.role === 'user' ? <User size={18} /> : <Bot size={18} className="text-primary" />}
-                                    </div>
-                                    <div className={cn(
-                                        "flex-1 min-w-0 space-y-2",
-                                        m.role === 'user' ? "text-right" : ""
-                                    )}>
-                                        <div className={cn(
-                                            "inline-block px-6 py-4 rounded-[2rem] text-sm md:text-base leading-relaxed max-w-full",
-                                            m.role === 'user'
-                                                ? "bg-primary text-white"
-                                                : "bg-[#0d0d0e] border border-white/5 text-foreground/90 prose prose-invert prose-p:leading-relaxed prose-pre:bg-black/50 prose-pre:border prose-pre:border-white/5"
-                                        )}>
-                                            {m.text}
-                                        </div>
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest px-2">
-                                            {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                        {isLoading && (
-                            <div className="flex gap-6 animate-pulse">
-                                <div className="w-10 h-10 rounded-xl bg-muted border border-white/5 flex items-center justify-center">
-                                    <Bot size={18} className="text-primary/40" />
-                                </div>
-                                <div className="bg-[#0d0d0e] border border-white/5 rounded-[2rem] px-8 py-5 flex items-center gap-3">
-                                    <div className="flex gap-1">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" />
-                                    </div>
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-primary/60">Gemma is thinking...</span>
-                                </div>
+                            <div className="max-w-md space-y-2">
+                                <h3 className="text-2xl font-black italic">How can I assist your learning journey?</h3>
+                                <p className="text-muted-foreground leading-relaxed">
+                                    I am your personal AI Architect. Ask me anything about Python, Machine Learning, or Advanced Data Science.
+                                </p>
                             </div>
-                        )}
-                    </div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full max-w-2xl pt-8">
+                                {[
+                                    { t: "Neural Networks", d: "Explain backpropagation" },
+                                    { t: "Data Analysis", d: "What is a P-value?" },
+                                    { t: "Python Core", d: "Decorators vs Generators" }
+                                ].map((s, i) => (
+                                    <button
+                                        key={i}
+                                        type="button"
+                                        onClick={() => setInput(s.d)}
+                                        className="p-4 rounded-2xl border border-white/5 bg-muted/30 hover:bg-primary/5 hover:border-primary/20 transition-all text-left group"
+                                    >
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{s.t}</p>
+                                        <p className="text-sm font-bold text-muted-foreground group-hover:text-foreground">{s.d}</p>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {messages.map((m) => (
+                        <div key={m.id} className={cn(
+                            "flex gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500",
+                            m.role === 'user' ? "flex-row-reverse" : ""
+                        )}>
+                            <div className={cn(
+                                "w-10 h-10 rounded-2xl shrink-0 flex items-center justify-center shadow-lg",
+                                m.role === 'user' ? "bg-primary text-primary-foreground shadow-primary/20" : "bg-muted border border-white/10"
+                            )}>
+                                {m.role === 'user' ? <User size={18} /> : <Bot size={18} />}
+                            </div>
+                            <div className={cn(
+                                "max-w-[75%] px-6 py-4 rounded-[2rem] leading-relaxed shadow-sm",
+                                m.role === 'user'
+                                    ? "bg-primary text-primary-foreground rounded-tr-none"
+                                    : "bg-muted/50 border border-white/5 text-foreground/90 rounded-tl-none"
+                            )}>
+                                <p className="text-[15px]">{m.text}</p>
+                            </div>
+                        </div>
+                    ))}
+                    {isLoading && (
+                        <div className="flex gap-6 animate-pulse">
+                            <div className="w-10 h-10 rounded-2xl bg-muted border border-white/10 flex items-center justify-center">
+                                <Bot size={18} className="text-primary" />
+                            </div>
+                            <div className="bg-muted/30 border border-white/5 rounded-[2rem] rounded-tl-none px-8 py-5">
+                                <Loader2 className="animate-spin text-primary" size={20} />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Input Area */}
-                <div className="p-6 md:pb-12 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b] to-transparent">
+                <div className="p-8 md:px-24 border-t bg-background/50 backdrop-blur-md">
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleSend();
                         }}
-                        className="max-w-3xl mx-auto relative group"
+                        className="max-w-4xl mx-auto flex gap-4"
                     >
-                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 blur opacity-0 group-focus-within:opacity-100 transition-opacity rounded-[2.5rem]" />
-                        <div className="relative flex items-end gap-3 bg-[#0d0d0e] border border-white/10 rounded-[2.5rem] p-2 pr-4 shadow-2xl transition-all focus-within:border-primary/50">
-                            <textarea
+                        <div className="flex-1 relative group">
+                            <input
+                                type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' && !e.shiftKey) {
-                                        e.preventDefault();
-                                        handleSend();
-                                    }
-                                }}
-                                placeholder={`Message ${selectedModel.split('-')[2].toUpperCase()}...`}
-                                rows={1}
-                                className="flex-1 bg-transparent border-none focus:ring-0 text-sm md:text-base py-4 px-6 max-h-40 resize-none scrollbar-none placeholder:text-muted-foreground/30"
-                                style={{ height: 'auto' }}
+                                placeholder="Ask your AI Architect..."
+                                className="w-full bg-muted/50 border border-white/10 rounded-[2rem] px-8 py-5 text-base focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted-foreground/40 shadow-inner"
                             />
-                            <button
-                                type="submit"
-                                disabled={isLoading || !input.trim()}
-                                className="mb-1 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20 hover:scale-110 active:scale-95 disabled:opacity-50 transition-all shrink-0"
-                            >
-                                <Send size={20} />
-                            </button>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                <div className="h-8 w-[1px] bg-white/5 mx-2" />
+                                <button
+                                    type="submit"
+                                    disabled={isLoading || !input.trim()}
+                                    className="bg-primary text-primary-foreground p-3 rounded-2xl shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 disabled:opacity-50 transition-all"
+                                >
+                                    <Send size={20} />
+                                </button>
+                            </div>
                         </div>
                     </form>
-                    <div className="mt-3 flex items-center justify-center gap-4">
-                        <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
-                            <Command size={10} />
-                            <span>Enter to Send</span>
-                        </div>
-                        <div className="w-1 h-1 rounded-full bg-white/5" />
-                        <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
-                            <Plus size={10} />
-                            <span>Shift + Enter for new line</span>
-                        </div>
-                    </div>
+                    <p className="mt-4 text-center text-[10px] text-muted-foreground/30 uppercase tracking-[0.2em]">
+                        AI may provide inaccurate info. Verify important facts.
+                    </p>
                 </div>
             </main>
         </div>
