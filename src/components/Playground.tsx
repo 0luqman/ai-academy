@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { Play, RotateCcw, Terminal, Code2, AlertCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -47,7 +47,7 @@ export default function Playground({ initialCode }: PlaygroundProps) {
 
             const pyodide = pyodideRef.current;
 
-            // Better way to capture output using StringIO
+            // Capture output using StringIO
             pyodide.runPython(`
 import sys
 import io
@@ -58,7 +58,8 @@ sys.stderr = io.StringIO()
             try {
                 await pyodide.runPythonAsync(code);
             } catch (err: any) {
-                setError(err.message);
+                // If it's a Python error, it will often be caught here or in stderr
+                console.warn("Python execution error caught:", err);
             }
 
             const stdout = pyodide.runPython("sys.stdout.getvalue()");
@@ -66,7 +67,7 @@ sys.stderr = io.StringIO()
 
             if (stdout) setOutput(stdout);
             if (stderr) {
-                setError(prev => prev ? prev + "\n" + stderr : stderr);
+                setError(stderr);
             }
         } catch (e: any) {
             console.error("Runner Error:", e);
@@ -126,26 +127,32 @@ sys.stderr = io.StringIO()
 
             {/* Editor Area */}
             <div className="h-[400px] w-full relative border-b bg-[#1e1e1e]">
-                <MonacoEditor
-                    height="100%"
-                    language="python"
-                    theme="vs-dark"
-                    value={code}
-                    onChange={(val) => setCode(val || '')}
-                    options={{
-                        minimap: { enabled: false },
-                        fontSize: 15,
-                        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-                        scrollBeyondLastLine: false,
-                        automaticLayout: true,
-                        padding: { top: 20, bottom: 20 },
-                        lineNumbers: "on",
-                        renderLineHighlight: "all",
-                        cursorSmoothCaretAnimation: "on",
-                        smoothScrolling: true,
-                        readOnly: isRunning
-                    }}
-                />
+                <Suspense fallback={
+                    <div className="absolute inset-0 flex items-center justify-center bg-[#1e1e1e]">
+                        <Loader2 className="animate-spin text-primary" size={24} />
+                    </div>
+                }>
+                    <MonacoEditor
+                        height="100%"
+                        language="python"
+                        theme="vs-dark"
+                        value={code}
+                        onChange={(val) => setCode(val || '')}
+                        options={{
+                            minimap: { enabled: false },
+                            fontSize: 15,
+                            fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                            scrollBeyondLastLine: false,
+                            automaticLayout: true,
+                            padding: { top: 20, bottom: 20 },
+                            lineNumbers: "on",
+                            renderLineHighlight: "all",
+                            cursorSmoothCaretAnimation: "on",
+                            smoothScrolling: true,
+                            readOnly: isRunning
+                        }}
+                    />
+                </Suspense>
             </div>
 
             {/* Console Output */}

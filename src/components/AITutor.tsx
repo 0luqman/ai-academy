@@ -19,21 +19,21 @@ export default function AITutor() {
     const scrollRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
 
-    // Persistence
+    // Persistence (Shared with full-screen chat)
     useEffect(() => {
-        const saved = localStorage.getItem('ai-tutor-mini');
+        const saved = localStorage.getItem('ai-tutor-history');
         if (saved) {
             try {
                 setMessages(JSON.parse(saved));
             } catch (e) {
-                console.error("Failed to load mini chat history", e);
+                console.error("Failed to load chat history", e);
             }
         }
-    }, []);
+    }, [isOpen]); // Reload when opening to sync with full chat
 
     useEffect(() => {
         if (messages.length > 0) {
-            localStorage.setItem('ai-tutor-mini', JSON.stringify(messages));
+            localStorage.setItem('ai-tutor-history', JSON.stringify(messages));
         }
     }, [messages]);
 
@@ -48,7 +48,7 @@ export default function AITutor() {
 
     const clearHistory = () => {
         setMessages([]);
-        localStorage.removeItem('ai-tutor-mini');
+        localStorage.removeItem('ai-tutor-history');
     };
 
     const handleSend = async () => {
