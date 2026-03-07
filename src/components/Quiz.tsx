@@ -15,8 +15,29 @@ interface QuizProps {
     questions: Question[];
 }
 
-export default function Quiz({ questions }: QuizProps) {
+export default function Quiz({ questions: initialQuestions }: QuizProps) {
+    const [questions, setQuestions] = React.useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    React.useEffect(() => {
+        if (typeof initialQuestions === 'string') {
+            try {
+                setQuestions(JSON.parse(initialQuestions));
+            } catch (e) {
+                console.error("Failed to parse quiz questions", e);
+            }
+        } else if (Array.isArray(initialQuestions)) {
+            setQuestions(initialQuestions);
+        }
+    }, [initialQuestions]);
+
+    if (!questions || questions.length === 0) {
+        return (
+            <div className="bg-card border rounded-2xl p-8 text-center my-8">
+                <p className="text-muted-foreground italic">No questions available for this quiz.</p>
+            </div>
+        );
+    }
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [score, setScore] = useState(0);
@@ -82,6 +103,7 @@ export default function Quiz({ questions }: QuizProps) {
     }
 
     const question = questions[currentQuestion];
+    if (!question) return null;
 
     return (
         <div className="bg-card border rounded-2xl shadow-sm my-8 overflow-hidden">

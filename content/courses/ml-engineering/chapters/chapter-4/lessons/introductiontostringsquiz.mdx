@@ -1,0 +1,67 @@
+---
+lessonId: introductiontostringsquiz
+courseId: ml-engineering
+chapterId: chapter-4
+lessonSlug: introductiontostringsquiz
+lessonTitle: Introduction To Strings Quiz
+order: 7
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Test your knowledge on Python strings
+  - Master string indexing and slicing
+  - Understand string methods and membership
+sourceFiles:
+  - ML/#50 introduction-to-strings-quiz.mhtml
+practiceExercises: []
+quiz: []
+type: exercise
+---
+
+Test your knowledge on Python string manipulation.
+
+<Quiz questions={[
+  {
+    question: "Given least_favorite_fruit = 'cantaloupe', what piece of code would create a string equal to 'lou'?",
+    options: [
+      "least_favorite_fruit[5:8]",
+      "least_favorite_fruit[6:8]",
+      "least_favorite_fruit[4:7]",
+      "least_favorite_fruit[5:7]"
+    ],
+    correctAnswer: 0,
+    explanation: "'c'(0), 'a'(1), 'n'(2), 't'(3), 'a'(4), 'l'(5), 'o'(6), 'u'(7), 'p'(8), 'e'(9). [5:8] gets 5, 6, 7 (lou)."
+  },
+  {
+    question: "Which of the following expressions is False?",
+    options: [
+      \"'s' in 'watermelon'\",
+      \"'a' in 'banana'\",
+      \"'cran' in 'cranberry'\",
+      \"'cherry' in 'cherry'\"
+    ],
+    correctAnswer: 0,
+    explanation: "There is no 's' in 'watermelon'."
+  },
+  {
+    question: "What character will be selected from cool_fruit = 'watermelon' using cool_fruit[len(cool_fruit) - 2]?",
+    options: ["'o'", "'l'", "'n'", "IndexError"],
+    correctAnswer: 0,
+    explanation: "len is 10. 10 - 2 = 8. 'w'(0), 'a'(1), 't'(2), 'e'(3), 'r'(4), 'm'(5), 'e'(6), 'l'(7), 'o'(8), 'n'(9). Index 8 is 'o'."
+  },
+  {
+    question: "What code would select the letter 'p' from the string good_fruit = 'Raspberry'?",
+    options: [
+      "good_fruit[3]",
+      "good_fruit(3)",
+      "good_fruit[4]",
+      "good_fruit(4)"
+    ],
+    correctAnswer: 0,
+    explanation: "'R'(0), 'a'(1), 's'(2), 'p'(3). Indexing uses square brackets."
+  }
+]} />
+
+### Review and Practice
+<Playground initialCode=\"# Experiment with string indexing and slicing\nfruit = 'cantaloupe'\nprint(fruit[5:8]) # 'lou'\n\nprint('s' in 'watermelon') # False\" />

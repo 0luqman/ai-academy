@@ -1,0 +1,177 @@
+---
+lessonId: ds-basics-enter-fullscreen-code-editor
+courseId: ds-basics
+chapterId: chapter-1
+lessonSlug: ds-basics-enter-fullscreen-code-editor
+lessonTitle: Enter Fullscreen Code Editor
+order: 8
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from pending content
+sourceFiles:
+  - >-
+    DS_PENDING\Data Analysis in Python\Inspect, clean and validate data\Enter
+    Fullscreen Code Editor (2_10_2026 12：09：02 AM).html
+practiceExercises: []
+quiz: []
+type: lesson
+---
+
+- Skip to ContentMy homeData and Programming Foundations for AI Skill PathOpen syllabusAsk the AI Learning AssistantConnected to AI Academy by RiWoTGet UnstuckTools# EDA: Diagnosing Diabetes
+
+## Project Brief
+
+### Objective
+
+Data and Programming Foundations for AI### EDA: Diagnosing Diabetes
+
+In this project, youll imagine you are a data scientist interested in exploring data that looks at how certain diagnostic factors affect the diabetes outcome of women patients.
+
+You will use your EDA skills to help inspect, clean, and validate the data.
+
+Note: This dataset is from the National Institute of Diabetes and Digestive and Kidney Diseases. It contains the following columns:
+
+Pregnancies: Number of times pregnant
+
+- Glucose: Plasma glucose concentration at 2 hours in an oral glucose tolerance test
+
+- BloodPressure: Diastolic blood pressure
+
+- SkinThickness: Triceps skinfold thickness
+
+- Insulin: 2-Hour serum insulin
+
+- BMI: Body mass index
+
+- DiabetesPedigreeFunction: Diabetes pedigree function
+
+- Age: Age (years)
+
+- Outcome: Class variable (0 or 1)
+
+Lets get started!
+
+Setup Instructions
+You have two options of completing this assignment. Either here, within AI Academy by RiWoTs output terminal, or on your own, in case youre more comfortable using a Jupyter notebook.If you choose to do this project on your computer instead of AI Academy by RiWoT, you can download what youll need by clicking the Download button below. If you need help setting up your computer, be sure to check out our setup guides:
+
+- Command Line Interface Setup
+
+- Introducing Jupyter Notebook
+
+- Setting up Jupyter Notebook
+
+- Getting Started with Jupyter
+
+- Getting More out of Jupyter Notebook
+
+Open EDA Diagnosing Diabetes.ipynb and follow the steps in the Jupyter Notebook. If you get stuck, you can look at EDA Diagnosing Diabetes_Solution.ipynb for the answer.
+
+Download### Tasks
+
+16/16 completeMark the tasks as complete by checking them off## Initial Inspection
+
+1.First, familiarize yourself with the dataset here.
+
+Look at each of the nine columns in the documentation.
+
+What do you expect each data type to be?
+
+Stuck? Get a hint2.Next, lets load in the diabetes data to start exploring.
+
+Load the data in a variable called diabetes_data and print the first few rows.
+
+Note: The data is stored in a file called diabetes.csv.
+
+Stuck? Get a hint3.How many columns (features) does the data contain?
+
+Stuck? Get a hint4.How many rows (observations) does the data contain?
+
+Stuck? Get a hint## Further Inspection
+
+5.Lets inspect diabetes_data further. 
+
+Do any of the columns in the data contain null (missing) values?
+
+Stuck? Get a hint6.If you answered no to the question above, not so fast! 
+
+While its technically true that none of the columns contain null values, that doesnt necessarily mean that the data isnt missing any values.
+
+When exploring data, you should always question your assumptions and try to dig deeper.
+
+To investigate further, calculate summary statistics on diabetes_data using the .describe() method.
+
+Stuck? Get a hint7.Looking at the summary statistics, do you notice anything odd about the following columns?
+
+- Glucose
+
+- BloodPressure
+
+- SkinThickness
+
+- Insulin
+
+- BMI
+
+Stuck? Get a hint8.Do you spot any other outliers in the data?
+
+Stuck? Get a hint9.Lets see if we can get a more accurate view of the missing values in the data.
+
+Use the following code to replace the instances of 0 with NaN in the five columns mentioned:
+
+```python
+diabetes_data[['Glucose','BloodPressure','SkinThickness','Insulin','BMI']] = diabetes_data[['Glucose','BloodPressure','SkinThickness','Insulin','BMI']].replace(0,np.nan)
+
+Copy to Clipboard
+```
+
+Stuck? Get a hint10.Next, check for missing (null) values in all of the columns just like you did in Step 5.
+
+Now how many missing values are there?
+
+Stuck? Get a hint11.Lets take a closer look at these rows to get a better idea of why some data might be missing.
+
+Print out all of the rows that contain missing (null) values.
+
+Stuck? Get a hint12.Go through the rows with missing data. Do you notice any patterns or overlaps between the missing data?
+
+Stuck? Get a hint13.Next, take a closer look at the data types of each column in diabetes_data.
+
+Does the result match what you would expect?
+
+Stuck? Get a hint14.To figure out why the Outcome column is of type object (string) instead of type int64, print out the unique values in the Outcome column.
+
+Stuck? Get a hint15.How might you resolve this issue?
+
+Stuck? Get a hint## Next Steps
+
+16.Congratulations! In this project, you saw how EDA can help with the initial data inspection and cleaning process. This is an important step as it helps to keep your datasets clean and reliable. 
+
+Here are some ways you might extend this project if youd like: 
+
+- Use .value_counts() to more fully explore the values in each column.
+
+- Investigate other outliers in the data that may be easily overlooked.
+
+- Instead of changing the 0 values in the five columns to NaN, try replacing the values with the median or mean of each column.
+
+### Code Review
+
+Get targeted feedback about your code and how well it meets the objective of the project.You can request 1 AI-powered review per project when you complete all tasks.Request code review## Code Editor
+
+Open file navigationscript.pyClose script.pyEnter Fullscreen Code EditorEnter Fullscreen Code Editor12345# import internal_libimport pandas as pdimport numpy as np# code goes here# import internal_lib
+import pandas as pd
+import numpy as np
+
+# code goes herectrl + enterSaveCopy fileReset Workspace (alt + g)Reset Workspace (alt+g)## Output-only Terminal
+
+Output:```python
+ 
+```
+
+## Web Browser
+
+Back to previous pageRefresh browser pageEnter Fullscreen Web Browser">16/16 completeBack (alt + , )BackNext (alt + . )Next
+
+<Playground />

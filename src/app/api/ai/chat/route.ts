@@ -8,7 +8,10 @@ export async function POST(req: NextRequest) {
 
         // Support both old and new payload formats
         const userPrompt = prompt || body.message;
-        const chatHistory = history || messages;
+        const chatHistory = (history || messages || []).map((m: any) => ({
+            role: m.role === 'assistant' || m.role === 'model' ? 'model' : 'user',
+            parts: [{ text: m.text || m.content || "" }]
+        }));
 
         if (!userPrompt) {
             return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });

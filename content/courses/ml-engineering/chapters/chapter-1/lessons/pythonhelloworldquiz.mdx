@@ -1,0 +1,87 @@
+---
+lessonId: pythonhelloworldquiz
+courseId: ml-engineering
+chapterId: chapter-1
+lessonSlug: pythonhelloworldquiz
+lessonTitle: Python Hello World Quiz
+order: 17
+difficulty: beginner
+estimatedMinutes: 15
+prerequisites: []
+learningObjectives:
+  - Test your knowledge of Python basics
+  - 'Verify understanding of variables, strings, and operators'
+  - Confirm ability to use basic functions like print()
+sourceFiles:
+  - ML/#19 python-hello-world-quiz.mhtml
+practiceExercises: []
+quiz: []
+type: exercise
+---
+
+Welcome to the Python Fundamentals Quiz! Let's see how much you've learned about the basics of Python.
+
+<Quiz questions={[
+  {
+    question: "Which function outputs text to the terminal in Python?",
+    options: ["output()", "write()", "print()", "log()"],
+    correctAnswer: 2,
+    explanation: "The print() function is the standard way to output text to the console in Python."
+  },
+  {
+    question: "How do you combine (concatenate) two strings in Python?",
+    options: ["string1 + string2", "string1.combine(string2)", "string1 & string2", "string1 . string2"],
+    correctAnswer: 0,
+    explanation: "In Python, the + operator is used to concatenate strings."
+  },
+  {
+    question: "What character is used to start a comment in Python?",
+    options: ["//", "/*", "#", "--"],
+    correctAnswer: 2,
+    explanation: "The hash symbol (#) is used to start a single-line comment in Python."
+  },
+  {
+    question: "What is the correct syntax for assigning the value 10 to a variable named 'count'?",
+    options: ["count == 10", "count := 10", "count = 10", "int count = 10"],
+    correctAnswer: 2,
+    explanation: "Python uses a single equals sign (=) for variable assignment."
+  },
+  {
+    question: "Which of the following would produce a SyntaxError?",
+    options: [
+      "message = 'Hello'",
+      "message = \"Hello\"",
+      "message = \"Hello'",
+      "message = \"\"\"Hello\"\"\""
+    ],
+    correctAnswer: 2,
+    explanation: "Python strings must start and end with the same type of quote (either single or double)."
+  },
+  {
+    question: "What is the difference between a float and an int?",
+    options: [
+      "A float represents decimal quantities. An int represents whole numbers.",
+      "A float is for text. An int is for numbers.",
+      "An int is for large numbers. A float is for small numbers.",
+      "There is no difference."
+    ],
+    correctAnswer: 0,
+    explanation: "Integers (int) are whole numbers, while floating-point numbers (float) can represent decimal values."
+  },
+  {
+    question: "How do you define a multi-line string in Python?",
+    options: [
+      "Using single quotes: 'string'",
+      "Using double quotes: \"string\"",
+      "Using triple quotes: \"\"\"string\"\"\"",
+      "Using backticks: `string`"
+    ],
+    correctAnswer: 2,
+    explanation: "Triple quotes (either \"\"\" or ''') allow a string to span multiple lines."
+  }
+]} />
+
+### Review and Practice
+If you missed any questions, try experimenting with the code below!
+
+<Playground initialCode="# Experiment with the concepts from the quiz\n\nmessage = 'Hello' + ' World'\nprint(message)\n\ncount = 10\nprint('The count is:', count)\n\npi = 3.14  # This is a float\nprint('Pi is approximately:', pi)" />

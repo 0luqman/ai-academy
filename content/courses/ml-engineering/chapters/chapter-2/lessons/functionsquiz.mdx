@@ -1,0 +1,62 @@
+---
+lessonId: functionsquiz
+courseId: ml-engineering
+chapterId: chapter-2
+lessonSlug: functionsquiz
+lessonTitle: Functions Quiz
+order: 4
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Test your knowledge on Python functions
+  - Understand return values and parameters
+  - Master function calling syntax
+sourceFiles:
+  - ML/#23 functions-quiz.mhtml
+practiceExercises: []
+quiz: []
+type: exercise
+---
+
+Test your knowledge on Python functions and their behavior.
+
+<Quiz questions={[
+  {
+    question: "What line of code can be used to return a variable 'inner_var' from a function?",
+    options: [
+      "return inner_var",
+      "inner_var = None",
+      "def inner_var",
+      "print(inner_var)"
+    ],
+    correctAnswer: 0,
+    explanation: "The 'return' keyword is used to send a value back to the caller of a function."
+  },
+  {
+    question: "What line will call 'force' with a value of 10 for mass and 9.81 for acceleration?",
+    options: [
+      "force(10, 9.81)",
+      "force(10, mass=9.81)",
+      "force(9.81, 10)",
+      "force(mass=10, 9.81)"
+    ],
+    correctAnswer: 0,
+    explanation: "Standard positional arguments follow the order defined in the function signature."
+  },
+  {
+    question: "How do you call a function named 'setup' with no arguments?",
+    options: ["setup()", "setup", "setup(None)", "def setup():"],
+    correctAnswer: 0,
+    explanation: "Parentheses () are required to execute a function, even if it takes no arguments."
+  },
+  {
+    question: "How do you call 'update' with a 'new_value' of 20?",
+    options: ["update(20)", "def update(20)", "update()", "update"],
+    correctAnswer: 0,
+    explanation: "To pass a value to a function, place it within the parentheses during the call."
+  }
+]} />
+
+### Review and Practice
+<Playground initialCode=\"def setup():\n    print('Setting up...')\n\ndef update(val):\n    return val * 2\n\nsetup()\nresult = update(10)\nprint('Result is:', result)\" />

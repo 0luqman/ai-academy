@@ -1,0 +1,188 @@
+---
+lessonId: ds-advanced-enter-fullscreen-code-editor
+courseId: ds-advanced
+chapterId: chapter-1
+lessonSlug: ds-advanced-enter-fullscreen-code-editor
+lessonTitle: Enter Fullscreen Code Editor
+order: 1
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from pending content
+sourceFiles:
+  - >-
+    DS_PENDING\math module\Algebra\Enter Fullscreen Code Editor (2_9_2026
+    10：37：47 PM).html
+practiceExercises: []
+quiz: []
+type: lesson
+---
+
+- Skip to ContentMy homeData and Programming Foundations for AI Skill PathOpen syllabusAsk the AI Learning AssistantConnected to AI Academy by RiWoTGet UnstuckTools# Linear Algebra with Python: Using NumPy Arrays
+
+## Narrative and Instructions
+
+LearnLinear Algebra with Python### Using NumPy Arrays
+
+11 minThe core of using NumPy effectively for linear algebra is using NumPy arrays. NumPy arrays are n-dimensional arrayPreview: Docs Loading link descriptiondata structuresPreview: Docs Loading link description
+
+ that can be used to represent both vectors (1-dimensional array) and matrices (2-dimensional arrays).
+
+A NumPy array is initialized using the np.array() function, and including a Python list argumentPreview: Docs Loading link description
+
+ or Python nested list argument for arrays with more than one dimension.
+
+For example, the following creates a NumPy array representation of a vector:
+
+```python
+v = np.array([1, 2, 3, 4, 5, 6])
+
+Copy to Clipboard
+```
+
+We can also create a matrix, which is the equivalent of a two-dimensional NumPy array, using a nested Python list:
+
+```python
+A = np.array([[1,2],[3,4]])
+
+Copy to Clipboard
+```
+
+If we print this NumPy array, it will look like the following:
+
+```python
+[[1 2]
+ [3 4]]
+
+Copy to Clipboard
+```
+
+Matrices can also be created by combining existing vectors using the np.column_stack() function:
+
+```python
+v = np.array([-2,-2,-2,-2])
+u = np.array([0,0,0,0])
+w = np.array([3,3,3,3])
+
+A = np.column_stack((v, u, w))
+print(A)
+
+Copy to Clipboard
+```
+
+Output:
+
+```python
+[[-2  0  3]
+ [-2  0  3]
+ [-2  0  3]
+ [-2  0  3]]
+
+Copy to Clipboard
+```
+
+To access the shape of a matrix or vector once its been created as a NumPy array, we call the .shape attribute of the array variable:
+
+```python
+A = np.array([[1,2],[3,4]])
+print(A.shape)
+
+Copy to Clipboard
+```
+
+Here, the output will be:
+
+```python
+(2, 2)
+
+Copy to Clipboard
+```
+
+since there are two rows and two columns.
+
+To access individual elements in a NumPy array, we can indexPreview: Docs Loading link description
+
+ the array using square brackets. Unlike regular Python lists, we can index into all dimensions in a single square bracket, separating the dimension indices with commas. 
+
+Thus in order to index the element equal to 2 in matrix A, we can do the following:
+
+```python
+A = np.array([[1,2],[3,4]])
+print(A[0,1])
+
+Copy to Clipboard
+```
+
+The first index accesses the specific row, while the second index accesses the specific column. Note that rows and columns are zero-indexed. In this example, the output will be the following:
+
+```python
+2
+
+Copy to Clipboard
+```
+
+We can also select a subset or entire dimension of a NumPy array using a colon. For example, if we want the entire second column of a matrix, we can index the second column and use an empty colon to select every row as such:
+
+```python
+A = np.array([[1,2],[3,4]])
+print(A[:,1])
+
+Copy to Clipboard
+```
+
+Output:
+
+```python
+[2 4]
+
+Copy to Clipboard
+```
+
+Note: [2 4] is a column vector, but it outputs in the terminalPreview: Docs Loading link description
+
+ horizontally.
+
+InstructionsCheckpoint 1 Passed1.In script.py, three NumPy arrays are preloaded in for you: vector_1, vector_2, and vector_3. Use .column_stack() to combine these three arrays into a 4x3 matrix. Save this value to a variable called matrix.
+
+In your matrix:
+
+vector_1 should be the first column.
+
+- vector_2 should be the second column.
+
+- vector_3 should be the third column.
+
+Print out matrix as well so you see its output in the terminal.
+
+Stuck? Get a hintCheckpoint 2 Passed2.Print out the shape of matrix into the output terminal.
+
+Stuck? Get a hintCheckpoint 3 Passed3.Use array indexing to print out the third column of matrix in the output terminal.
+
+Stuck? Get a hintCommunity SupportStill have questions? Get help from the AI Academy by RiWoT community.## Code Editor
+
+Open file navigationscript.pyClose script.pyEnter Fullscreen Code EditorEnter Fullscreen Code Editor123456789101112131415import numpy as np# Given vectorsvector_1 = np.array([-2,-6,2,3])vector_2 = np.array([4,1,-3,8])vector_3 = np.array([5,-7,9,0])# Answer 1matrix = np.column_stack((vector_1, vector_2, vector_3))print(matrix)# Answer 2print(matrix.shape)# Answer 3import numpy as np
+
+# Given vectors
+vector_1 = np.array([-2,-6,2,3])
+vector_2 = np.array([4,1,-3,8])
+vector_3 = np.array([5,-7,9,0])
+
+# Answer 1
+matrix = np.column_stack((vector_1, vector_2, vector_3))
+ctrl + enterRunLoading CompleteCopy fileReset Workspace (alt + g)Reset Workspace (alt+g)View solution## Output-only Terminal
+
+Output:```python
+[[-2  4  5]
+ [-6  1 -7]
+ [ 2 -3  9]
+ [ 3  8  0]]
+(4, 3)
+[ 5 -7  9  0]
+ 
+```
+
+2/6Back (alt + , )BackNext (alt + . )Next
+Linear Algebra with Python: Introduction
+
+<Playground />

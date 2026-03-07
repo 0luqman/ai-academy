@@ -132,7 +132,7 @@ export default function ChatPage() {
                     message: input,
                     model: selectedModel,
                     context: "Premium full-screen AI Tutor interface.",
-                    messages: convo.messages.slice(0, -1).map(m => ({
+                    messages: convo.messages.map(m => ({
                         role: m.role,
                         content: m.text
                     }))
