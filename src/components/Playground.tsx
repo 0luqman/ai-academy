@@ -47,12 +47,13 @@ export default function Playground({ initialCode }: PlaygroundProps) {
 
             const pyodide = pyodideRef.current;
 
-            // Better way to capture output using StringIO
+            // Clear previous output streams
             pyodide.runPython(`
 import sys
-import io
-sys.stdout = io.StringIO()
-sys.stderr = io.StringIO()
+sys.stdout.truncate(0)
+sys.stdout.seek(0)
+sys.stderr.truncate(0)
+sys.stderr.seek(0)
             `);
 
             try {

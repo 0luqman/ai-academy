@@ -1,0 +1,76 @@
+---
+lessonId: functionsreview
+courseId: ml-engineering
+chapterId: chapter-2
+lessonSlug: functionsreview
+lessonTitle: Functions Review
+order: 3
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from legacy content
+sourceFiles:
+  - ML/#22 functions-review.mhtml
+practiceExercises: []
+quiz: []
+type: lesson
+---
+Excellent work! 👏 In this lesson, you’ve covered a major fundamental programming concept used in the majority of all programs to organize code into reusable blocks.
+To recap, we explored: 
+
+
+
+- What problems arise in our programs without functions
+
+What [functions](/learn)Preview: Docs Loading link description
+
+Alright, this is it. We are going to use all of our knowledge of functions to build out TripPlanner V1.0. 
+
+
+First, like in our previous exercises, we want to make sure to welcome our users to the application. 
+
+
+Create a function called trip_planner_welcome() that takes one parameter called name. The function should use print() to output a message like this: 
+
+
+Welcome to tripplanner v1.0 <Name Here>
+
+Next, we are going to define a function called estimated_time_rounded() that will allow us to calculate a rounded time value based on a decimal for our user’s trip.
+
+
+An example call for this function will look like this:
+
+
+estimated_time_rounded(2.5)
+
+Next, we are going to generate messages for a user’s planned trip. 
+
+
+Create a function called destination_setup() that will have four parameters in this exact order: 
+
+
+
+- origin
+
+- destination
+
+- estimated_time
+
+- mode_of_transport
+
+
+Give the parameter mode_of_transport a default value of "Car". The program will error out if we run it since we have not defined a function body yet. Don’t worry we will do that in the next step.
+
+Next, we are going to write four print() statements in our function. The output on this function call should look like this: 
+
+
+Your trip starts off in <origin>And you are traveling to <destination>You will be traveling by <mode_of_transport>It will take approximately <estimated_time> hours
+
+Great job! 👏 
+
+
+We have successfully finished our first version of the trip builder application. Go ahead and try passing different values into your functions!
+
+
+<Playground initialCode="# Try your Python code here!\n\nprint('Hello from mlengineeringfunctionsreview')" />

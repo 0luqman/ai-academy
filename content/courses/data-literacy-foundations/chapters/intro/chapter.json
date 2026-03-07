@@ -1,12 +1,12 @@
 {
-  "chapterId": "intro",
-  "courseId": "data-literacy-foundations",
-  "chapterSlug": "intro",
-  "chapterTitle": "Introduction to Data",
-  "order": 1,
-  "lessonOrder": [
-    "what-is-data",
-    "data-bias"
-  ],
-  "estimatedMinutes": 45
+    "chapterId": "intro",
+    "courseId": "data-literacy-foundations",
+    "chapterSlug": "intro",
+    "chapterTitle": "Introduction to Data",
+    "order": 1,
+    "lessonOrder": [
+        "what-is-data",
+        "data-bias"
+    ],
+    "estimatedMinutes": 45
 }

@@ -1,0 +1,50 @@
+---
+lessonId: code
+courseId: ml-engineering
+chapterId: chapter-2
+lessonSlug: code
+lessonTitle: 'Python Lists Project: Medical Insurance'
+order: 12
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Consolidate your knowledge of Python lists
+  - Use zip() to combine data
+  - Practice list manipulation
+sourceFiles:
+  - ML/#30.1 Code.txt
+practiceExercises: []
+quiz: []
+type: exercise
+---
+
+In this exercise, you will apply your knowledge of Python lists to organize medical insurance data. You will be using the `zip()` function to pair names with their respective insurance costs.
+
+### Insurance Cost Calculator
+
+Below is the base code for calculating insurance costs. We've estimated costs for Maria, Rohan, and Valentina.
+
+```python
+def estimate_insurance_cost(name, age, sex, bmi, num_of_children, smoker):
+  estimated_cost = 250*age - 128*sex + 370*bmi + 425*num_of_children + 24000*smoker - 12500
+  print(name + "'s Estimated Insurance Cost: " + str(estimated_cost) + " dollars.")
+  return estimated_cost
+
+# Estimate Costs
+maria_cost = estimate_insurance_cost(name="Maria", age=31, sex=0, bmi=23.1, num_of_children=1, smoker=0)
+rohan_cost = estimate_insurance_cost(name="Rohan", age=25, sex=1, bmi=28.5, num_of_children=3, smoker=0)
+valentina_cost = estimate_insurance_cost(name="Valentina", age=53, sex=0, bmi=31.4, num_of_children=0, smoker=1)
+
+# Organize Data
+names = ["Maria", "Rohan", "Valentina"]
+insurance_costs = [maria_cost, rohan_cost, valentina_cost]
+insurance_data = list(zip(names, insurance_costs))
+print("Current Insurance Data: " + str(insurance_data))
+```
+
+### Try it yourself!
+
+Use the playground below to run the code and add your own data points to the lists.
+
+<Playground initialCode="def estimate_insurance_cost(name, age, sex, bmi, num_of_children, smoker):\n  estimated_cost = 250*age - 128*sex + 370*bmi + 425*num_of_children + 24000*smoker - 12500\n  print(name + \"'s Estimated Insurance Cost: \" + str(estimated_cost) + \" dollars.\")\n  return estimated_cost\n \n# Estimates\nmaria_cost = estimate_insurance_cost(name=\"Maria\", age=31, sex=0, bmi=23.1, num_of_children=1, smoker=0)\nrohan_cost = estimate_insurance_cost(name=\"Rohan\", age=25, sex=1, bmi=28.5, num_of_children=3, smoker=0)\nvalentina_cost = estimate_insurance_cost(name=\"Valentina\", age=53, sex=0, bmi=31.4, num_of_children=0, smoker=1)\n\n# Organize Data\nnames = [\"Maria\", \"Rohan\", \"Valentina\"]\ninsurance_costs = [maria_cost, rohan_cost, valentina_cost]\ninsurance_data = list(zip(names, insurance_costs))\n\nprint(\"Current Insurance Data:\", insurance_data)\n\n# ADD YOUR CODE BELOW\n" />

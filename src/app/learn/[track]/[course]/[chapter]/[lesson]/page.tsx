@@ -2,6 +2,7 @@ import { getLesson, getCourse, getChapter, getLessonsInChapter, getChaptersInCou
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/mdx-components";
+import ContentErrorBoundary from "@/components/ContentErrorBoundary";
 import Link from "next/link";
 import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket } from "lucide-react";
 
@@ -18,7 +19,7 @@ export default function LessonPage({
 
     if (!course || !chapter || !lesson) return notFound();
 
-    const currentLessonIndex = lessons.findIndex(l => l.lessonSlug === params.lesson);
+    const currentLessonIndex = lessons.findIndex(l => l && l.lessonSlug === params.lesson);
     const prevLesson = currentLessonIndex > 0 ? lessons[currentLessonIndex - 1] : null;
     const nextLesson = currentLessonIndex < lessons.length - 1 ? lessons[currentLessonIndex + 1] : null;
 
@@ -151,10 +152,12 @@ export default function LessonPage({
                         prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                         prose-strong:text-foreground prose-strong:font-bold
                         prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10 prose-img:shadow-2xl">
-                        <MDXRemote
-                            source={lesson.content}
-                            components={mdxComponents}
-                        />
+                        <ContentErrorBoundary>
+                            <MDXRemote
+                                source={lesson.content}
+                                components={mdxComponents}
+                            />
+                        </ContentErrorBoundary>
                     </article>
 
                     {/* Navigation Footer */}
