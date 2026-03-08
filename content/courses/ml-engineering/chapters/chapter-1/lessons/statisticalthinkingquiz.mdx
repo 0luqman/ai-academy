@@ -1,0 +1,50 @@
+---
+lessonId: statisticalthinkingquiz
+courseId: ml-engineering
+chapterId: chapter-1
+lessonSlug: statisticalthinkingquiz
+lessonTitle: Statistical Thinking Quiz
+order: 8
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Test your knowledge on descriptive statistics
+  - Understand mean, median, and spread
+  - Master data aggregation and distributions
+sourceFiles:
+  - ML/#8 statistical-thinking-quiz.mhtml
+practiceExercises: []
+quiz: []
+---
+
+Test your knowledge on statistical concepts and data distributions.
+
+<Quiz questions={[
+  {
+    question: "True or False: Finding the mean number of cities for every region of a country is an example of aggregating data.",
+    options: ["True", "False"],
+    correctAnswer: 0,
+    explanation: "Aggregation involves summarizing multiple data points into a single value, such as a mean or sum."
+  },
+  {
+    question: "The median retirement age is 65.4 years with an IQR of 7.2 years. Which statement is true?",
+    options: [
+      "Half of the ages are < 65.4 and half are > 65.4. The middle 50% spans 7.2 years.",
+      "The third quartile is 72.6 years.",
+      "The first quartile is 58.2 years.",
+      "The second quartile is greater than 65.4."
+    ],
+    correctAnswer: 0,
+    explanation: "The median divides the distribution in half. The Interquartile Range (IQR) measures the spread of the middle 50%."
+  },
+  {
+    question: "True or False: We can always get precise summary information just by viewing the raw dataframe.",
+    options: ["True", "False"],
+    correctAnswer: 1,
+    explanation: "Raw dataframes can be too large to interpret visually; you need statistical summaries and visualizations."
+  }
+]} />
+
+### Practice Playground
+<Playground initialCode=\"# Use this space to explore your thoughts!\nprint('Ready to learn more!')\" />

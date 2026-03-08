@@ -46,8 +46,8 @@
                 "lessonTitle": "Pandas"
               },
               {
-                "lessonSlug": "intro-to-eda",
-                "lessonTitle": "Introduction to Exploratory Data Analysis"
+                "lessonSlug": "ds-basics-no-title",
+                "lessonTitle": "ds-basics-no-title"
               },
               {
                 "lessonSlug": "ds-basics-enter-fullscreen-code-editor",
@@ -74,16 +74,16 @@
             "chapterTitle": "Module 1",
             "lessons": [
               {
-                "lessonSlug": "data-programming-foundations",
-                "lessonTitle": "Data and Programming Foundations for AI"
+                "lessonSlug": "data-and-programming-foundations-for-ai-ai-academy-2-9-2026-105312-pm",
+                "lessonTitle": "data-and-programming-foundations-for-ai-ai-academy-2-9-2026-105312-pm"
               },
               {
                 "lessonSlug": "ds-advanced-enter-fullscreen-code-editor",
                 "lessonTitle": "Enter Fullscreen Code Editor"
               },
               {
-                "lessonSlug": "intro-to-linear-algebra",
-                "lessonTitle": "Introduction to Linear Algebra"
+                "lessonSlug": "ds-advanced-no-title",
+                "lessonTitle": "ds-advanced-no-title"
               },
               {
                 "lessonSlug": "ds-advanced-exit-fullscreen-code-editor",
@@ -214,8 +214,8 @@
                 "lessonTitle": "Review"
               },
               {
-                "lessonSlug": "python-control-flow-lab",
-                "lessonTitle": "Python Control Flow Lab"
+                "lessonSlug": "learnpython-2controlflow-spacepy-at-main-ai-academy-learnpython",
+                "lessonTitle": "learnpython-2controlflow-spacepy-at-main-ai-academy-learnpython"
               },
               {
                 "lessonSlug": "pythoncontrolflowquiz",
@@ -260,8 +260,8 @@
                 "lessonTitle": "DS Python Lists2 Project"
               },
               {
-                "lessonSlug": "git-bash-setup",
-                "lessonTitle": "How to Install Git Bash for Windows"
+                "lessonSlug": "how-to-install-git-bash-for-windows-complete-setup-guide-ai-academy",
+                "lessonTitle": "how-to-install-git-bash-for-windows-complete-setup-guide-ai-academy"
               },
               {
                 "lessonSlug": "code-text",
@@ -425,7 +425,7 @@
               },
               {
                 "lessonSlug": "code-snippet",
-                "lessonTitle": "Code SNIPPET"
+                "lessonTitle": "SQL Code Snippet: User Churn Analysis"
               },
               {
                 "lessonSlug": "code-review-hackingthefender",

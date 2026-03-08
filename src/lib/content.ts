@@ -96,33 +96,32 @@ export function getChaptersInCourse(courseSlug: string): Chapter[] {
 
 const lessonFrontmatterCache = new Map<string, LessonFrontmatter>();
 
-export function getLessonFrontmatter(lessonSlug: string): LessonFrontmatter | null {
-    if (lessonFrontmatterCache.has(lessonSlug)) {
-        return lessonFrontmatterCache.get(lessonSlug)!;
+export function getLessonFrontmatter(courseSlug: string, chapterSlug: string, lessonSlug: string): LessonFrontmatter | null {
+    const cacheKey = `${courseSlug}-${chapterSlug}-${lessonSlug}`;
+    if (lessonFrontmatterCache.has(cacheKey)) {
+        return lessonFrontmatterCache.get(cacheKey)!;
     }
 
-    const file = path.join(contentDir, 'mdx', `${lessonSlug}.mdx`);
+    const file = path.join(contentDir, 'courses', courseSlug, 'chapters', chapterSlug, 'lessons', `${lessonSlug}.mdx`);
     if (!fs.existsSync(file)) return null;
 
-    // Read only the beginning of the file to get frontmatter if possible,
-    // but gray-matter is efficient enough if we only take 'data'
     const raw = fs.readFileSync(file, 'utf-8');
     const { data } = matter(raw);
     const frontmatter = data as LessonFrontmatter;
 
-    lessonFrontmatterCache.set(lessonSlug, frontmatter);
+    lessonFrontmatterCache.set(cacheKey, frontmatter);
     return frontmatter;
 }
 
 export function getLesson(courseSlug: string, chapterSlug: string, lessonSlug: string): Lesson | null {
-    const file = path.join(contentDir, 'mdx', `${lessonSlug}.mdx`);
+    const file = path.join(contentDir, 'courses', courseSlug, 'chapters', chapterSlug, 'lessons', `${lessonSlug}.mdx`);
     if (!fs.existsSync(file)) return null;
     const raw = fs.readFileSync(file, 'utf-8');
     const { data, content } = matter(raw);
 
     const frontmatter = data as LessonFrontmatter;
-    // Update cache while we're at it
-    lessonFrontmatterCache.set(lessonSlug, frontmatter);
+    const cacheKey = `${courseSlug}-${chapterSlug}-${lessonSlug}`;
+    lessonFrontmatterCache.set(cacheKey, frontmatter);
 
     return { frontmatter, content };
 }
@@ -131,6 +130,6 @@ export function getLessonsInChapter(courseSlug: string, chapterSlug: string): Le
     const chapter = getChapter(courseSlug, chapterSlug);
     if (!chapter) return [];
     return chapter.lessonOrder.map(lessonSlug => {
-        return getLessonFrontmatter(lessonSlug);
+        return getLessonFrontmatter(courseSlug, chapterSlug, lessonSlug);
     }).filter(Boolean) as LessonFrontmatter[];
 }

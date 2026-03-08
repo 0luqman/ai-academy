@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/mdx-components";
 import Link from "next/link";
-import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket } from "lucide-react";
+import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket, Loader2 } from "lucide-react";
+import { ContentErrorBoundary } from "@/components/ContentErrorBoundary";
+import { Suspense } from "react";
 
 export default function LessonPage({
     params
@@ -98,7 +100,7 @@ export default function LessonPage({
                     <nav className="mb-12 flex items-center space-x-2 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
                         <Link href="/learn" className="hover:text-primary transition-colors">Academy</Link>
                         <ChevronRight size={12} className="opacity-50" />
-                        <Link href={`/learn/${params.track}`} className="hover:text-primary transition-colors">{params.track.replace('-', ' ')}</Link>
+                        <Link href={`/learn/${params.track}`} className="hover:text-primary transition-colors">{params.track.replace(/-/g, ' ')}</Link>
                         <ChevronRight size={12} className="opacity-50" />
                         <span className="text-muted-foreground/80">{course.courseTitle}</span>
                     </nav>
@@ -151,10 +153,19 @@ export default function LessonPage({
                         prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                         prose-strong:text-foreground prose-strong:font-bold
                         prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10 prose-img:shadow-2xl">
-                        <MDXRemote
-                            source={lesson.content}
-                            components={mdxComponents}
-                        />
+                        <ContentErrorBoundary>
+                            <Suspense fallback={
+                                <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                                    <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Loading interactive content...</p>
+                                </div>
+                            }>
+                                <MDXRemote
+                                    source={lesson.content}
+                                    components={mdxComponents}
+                                />
+                            </Suspense>
+                        </ContentErrorBoundary>
                     </article>
 
                     {/* Navigation Footer */}
