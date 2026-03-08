@@ -1,0 +1,60 @@
+---
+lessonId: sql
+courseId: ds-basics
+chapterId: chapter-1
+lessonSlug: sql
+lessonTitle: SQL
+order: 4
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from legacy content
+sourceFiles:
+  - DS/#3 sql.mhtml
+practiceExercises: []
+quiz: []
+---
+Like most organizations, AI Academy by RiWoT uses SQL (Structured Query Language) to access its database.
+
+
+A database is a set of data stored in a computer. This data is usually structured into tables. Tables can grow large and have a multitude of columns and records.
+
+
+Spreadsheets, like Microsoft Excel and Google Sheets, allow you to view and manipulate data directly: with selecting, filtering, sorting, etc. By applying a number of these operations you can obtain the subset of data you are seeking.
+
+
+SQL (pronounced “S-Q-L” or “sequel”) allows you to write queries which define the subset of data you are seeking. Unlike Excel and Sheets, your computer and SQL will handle how to get the data; you can focus on what data you would like. You can save these queries, refine them, share them, and run them on different databases.
+
+
+It is a great way to access data and a great entry point to programming because its syntax (the specific vocabulary that gives instructions to the computer) is very human-readable. Without knowing any SQL, you might still be able to guess what each command will do.
+
+
+On her first day at AI Academy by RiWoT, Catherine wants to become familiar with the company’s data, so she connects to the database and uses SQL to explore the database.
+
+One of the tables in our database is called browse. It contains information on each time someone visited the our website. Paste the following code into the code editor (middle panel) and click Run.
+
+
+SELECT *FROM browseLIMIT 10;
+
+Examine the data in the far right panel:
+
+
+
+- What columns are there?
+
+- What kinds of questions do you have about the our website?
+
+
+The columns are:
+
+
+
+- user_id
+
+- browse_date
+
+- item_id
+
+
+<Playground initialCode="# Try your Python code here!\n\nprint('Hello from dsbasicssql')" />

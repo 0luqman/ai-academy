@@ -1,0 +1,55 @@
+---
+lessonId: simulatingbinomialdistribution
+courseId: ml-engineering
+chapterId: chapter-4
+lessonSlug: simulatingbinomialdistribution
+lessonTitle: Simulating Binomial Distribution
+order: 4
+difficulty: intermediate
+estimatedMinutes: 20
+prerequisites: []
+learningObjectives:
+  - Material from legacy content
+sourceFiles:
+  - ML/#48 simulating-binomial-distribution.mhtml
+practiceExercises: []
+quiz: []
+---
+Sometimes you want to simulate a lot of different scenarios. It would be very expensive to run thousands of tests, but it’s very cheap to generate thousands of results.
+
+
+In this exercise, we are going to simulate binomial data. Binomial distributions are very useful for modeling different types of data, [from](/learn)Preview: Docs Loading link description
+
+Start by importing the numpy library.
+
+import numpy
+
+Call the random.binomial() method to simulate
+
+
+
+- a single (1) coin toss
+
+- using a biased coin that has a 0.8 probability of landing on heads. We’ll call heads successful.
+
+- conducted 500 times.
+
+print(numpy.random.binomial(n = 1, p = 0.8, size = 500))
+
+Now let’s increase the number of trials per experiment.
+
+
+Call the random.binomial() method to simulate
+
+
+
+- 100 tosses
+
+- using a biased coin that has a 0.8 probability of landing on heads. We’ll call heads successful.
+
+- conducted 500 times.
+
+print(numpy.random.binomial(n = 100, p = 0.8, size = 500))
+
+
+<Playground initialCode="# Try your Python code here!\n\nprint('Hello from mlengineeringsimulatingbinomialdistribution')" />

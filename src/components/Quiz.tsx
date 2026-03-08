@@ -15,7 +15,11 @@ interface QuizProps {
     questions: Question[];
 }
 
-export default function Quiz({ questions }: QuizProps) {
+export default function Quiz({ questions: initialQuestions }: QuizProps) {
+    const questions = typeof initialQuestions === 'string'
+        ? JSON.parse(initialQuestions)
+        : (initialQuestions || []);
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
