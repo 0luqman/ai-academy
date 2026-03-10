@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/mdx-components";
 import Link from "next/link";
-import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket } from "lucide-react";
+import { ChevronRight, ChevronLeft, BookOpen, Clock, BarChart3, Menu, X, Rocket, Loader2 } from "lucide-react";
+import { Suspense } from "react";
+import { ContentErrorBoundary } from "@/components/ContentErrorBoundary";
 
 export default function LessonPage({
     params
@@ -151,10 +153,19 @@ export default function LessonPage({
                         prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                         prose-strong:text-foreground prose-strong:font-bold
                         prose-img:rounded-[2rem] prose-img:border prose-img:border-white/10 prose-img:shadow-2xl">
-                        <MDXRemote
-                            source={lesson.content}
-                            components={mdxComponents}
-                        />
+                        <ContentErrorBoundary>
+                            <Suspense fallback={
+                                <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
+                                    <Loader2 className="animate-spin mb-4" size={32} />
+                                    <p className="text-sm font-medium animate-pulse">Loading interactive content...</p>
+                                </div>
+                            }>
+                                <MDXRemote
+                                    source={lesson.content}
+                                    components={mdxComponents}
+                                />
+                            </Suspense>
+                        </ContentErrorBoundary>
                     </article>
 
                     {/* Navigation Footer */}
